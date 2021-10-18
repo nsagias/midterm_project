@@ -42,7 +42,7 @@ CREATE TABLE cars (
   cover_url VARCHAR(255) NOT NULL,
 
   car_price INTEGER  NOT NULL DEFAULT 0,
-  
+
   sold BOOLEAN NOT NULL DEFAULT FALSE,
   delete_date DATE DEFAULT NULL
 );

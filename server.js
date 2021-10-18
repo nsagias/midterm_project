@@ -22,6 +22,8 @@ app.use(morgan("dev"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
+
+
 app.use(
   "/styles",
   sassMiddleware({
@@ -32,6 +34,7 @@ app.use(
 );
 
 app.use(express.static("public"));
+app.use(express.static("images"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -51,6 +54,28 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+app.get("/car", (req, res) => {
+  res.render("car_index");
+});
+
+app.get("/show", (req, res) => {
+  res.render("car_show")
+});
+
+app.get("/new", (req, res) => {
+  res.render("car_new")
+});
+
+// LOGIN STRETCH
+// app.get("/login", (req, res) => {
+//   res.render("login")
+// });
+
+// REGISTRATION STREACH
+// app.get("/register", (req, res) => {
+//   res.render("register")
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

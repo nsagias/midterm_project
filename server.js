@@ -55,6 +55,28 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/car", (req, res) => {
+  res.render("car_index");
+});
+
+app.get("/show", (req, res) => {
+  res.render("car_show")
+});
+
+app.get("/new", (req, res) => {
+  res.render("car_new")
+});
+
+// LOGIN STRETCH
+// app.get("/login", (req, res) => {
+//   res.render("login")
+// });
+
+// REGISTRATION STREACH
+// app.get("/register", (req, res) => {
+//   res.render("register")
+// });
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

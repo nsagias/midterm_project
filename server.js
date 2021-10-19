@@ -65,7 +65,7 @@ app.get("/cars/:user_id", (req, res) => {
   res.render("car_index");
 });
 
-app.get("/show/:id", (req, res) => {
+app.get("/show/:car_id", (req, res) => {
   res.render("car_show")
 });
 

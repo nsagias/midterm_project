@@ -26,8 +26,7 @@
           <th scope="col">MAKE</th>
           <th scope="col">MODEL</th>
           <th scope="col">CAR PRICE</th>
-          <th scope="col">MESSAGE SELLER</th>
-          <th scope="col">REMOVE FROM FAVOURITES</th>
+          <th scope="col">ADD FAVOURITES</th>
         </tr>
       </thead>
       <tbody>
@@ -39,12 +38,8 @@
             <td>MAKE: HONDA</td>
             <td>MODEL: CIVIC RS</td>
             <td>$100000</td>
-            <td><form method="GET" action="/ENDPOINT">
-              <button type="submit" class="btn btn-outline-primary">SEND MESSAGE</button>
-            </form>
-            </td>
-            <td><form method="POST" action="/ENDPOINT/ID/DELETE">
-              <button type="submit" class="btn btn-outline-danger">REMOVE</button>
+            <td><form method="POST" action="/ENDPOINT/ID/ADD">
+              <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
 
             </form>
             </td>

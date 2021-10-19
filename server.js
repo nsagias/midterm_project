@@ -56,16 +56,50 @@ app.get("/", (req, res) => {
 });
 
 app.get("/cars", (req, res) => {
+
   res.render("car_index");
 });
 
-app.get("/show", (req, res) => {
+app.get("/cars/:user_id", (req, res) => {
+
+  res.render("car_index");
+});
+
+app.get("/show/:id", (req, res) => {
   res.render("car_show")
 });
 
+// favourite feature related route
+app.get("/favourites", (req, res) => {
+
+});
+
+
+// messages feature related route
+app.post("/messages", (req, res) => {
+
+});
+
+// messages feature related route
+app.get("/messages", (req, res) => {
+
+});
+
+// favourite feature related route
+app.post("/favourites", (req, res) => {
+
+});
+
+// Display form to add a new car
 app.get("/new", (req, res) => {
   res.render("car_new")
 });
+
+// Recieve new car form submission and send to db
+app.post("/new", (req, res) => {
+
+});
+
 
 // LOGIN STRETCH
 // app.get("/login", (req, res) => {

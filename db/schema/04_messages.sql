@@ -1,3 +1,5 @@
+-- Drop and recreate messages table 
+
 DROP TABLE IF EXISTS messages  CASCADE;
 
 CREATE TABLE messages (

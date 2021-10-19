@@ -1,3 +1,5 @@
+-- Drop and recreate favourites table 
+
 DROP TABLE IF EXISTS favourites CASCADE;
 
 CREATE TABLE favourites (

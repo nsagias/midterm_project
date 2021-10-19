@@ -9,11 +9,17 @@
   <%- include('partials/_header') %>
 </header>
 <body>
+  <div class="container d-flex justify-content-center">
   <h1>Add a new car</h1>
+  <div>
   <form action="/new" method="post" id="new-car-form" class="new-car-form">
     <div class="form-group">
       <label for="new-car-form_title">Title</lable>
       <input type="text" name="title" placeholder="Title" id="new-car-form_title">
+    </div>
+    <div class="form-group">
+      <label for="new-car-form_seller_id">Seller ID</lable>
+      <input type="text" name="seller_id" placeholder="Seller ID" id="new-car-form_seller_id">
     </div>
     <div class="form-goup">
       <label for="new-car-form_Descriptions">Description</label>
@@ -30,32 +36,29 @@
     <div class="form-group">
       <label for="new-car-form_model">Model</lable>
       <input type="text" name="model" placeholder="Model" id="new-car-form_model">
-    </div>
+      </div>
     <div class="form-group">
       <label for="new-car-form_model_colour">Colour</lable>
       <input type="text" name="model_colour" placeholder="Colour" id="new-car-form_model_colour">
     </div>
     <div class="form-group">
-      <label for="new-car-form_thumbnail_url">Choose a thumbnail image</label>
-      <input type="file" class="form-control-file" name="thumbnail_url" id="new-car-form_thumbnail_url">
+      <label for="new-car-form_thumbnail_url">Thumbnail Image</lable>
+      <input type="text" placeholder="Thumbnail" name="thumbnail_url" id="new-car-form_thumbnail_url">
     </div>
     <div class="form-group">
-      <label for="new-car-form_cover_url">Choose a cover image</label>
-      <input type="file" class="form-control-file" name="cover_url" id="new-car-form_cover_url">
-    </div>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text">$</span>
-      </div>
-      <input type="number" class="form-control" width="50" name="car_price" aria-label="Amount (to the nearest dollar)">
-      <div class="input-group-append">
-        <span class="input-group-text">.00</span>
-      </div>
+      <label for="new-car-form_cover_url">Cover Image</lable>
+      <input type="text" placeholder="Cover Image" name="cover_url" id="new-car-form_cover_url">
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success">Create</button>
+      <label for="new-car-form_car_price">Price</lable>
+      <input type="text" placeholder="Price" name="car_price" id="new-car-form_car_price">
     </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-success">Add the Car</button>
+    </div>
+  </div>
   </form>
+</div>
 
 
 

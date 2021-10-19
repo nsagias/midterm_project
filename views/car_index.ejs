@@ -6,44 +6,45 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>TinyApp</title>
+  <title>LANDING PAGE</title>
 </head>
 <header>
   <%- include('partials/_header') %>
 </header>
 <body>
   <main style="margin: 1em;">
-    <h3>My URLs</h3>
-    <form method="GET" action="/urls/new">
-      <button type="submit" class="btn btn-success">Create New URL</button>
+    <h3>NEW CARS FOR SALES</h3>
+    <form method="GET" action="/ENPOINT/FAVOURITES">
+      <button type="submit" class="btn btn-success">GET MY FAVOURITES</button>
     </form>
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">Short URL</th>
-          <th scope="col">Long URL</th>
-          <th scope="col">Created On</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+          <th scope="col">CAR THUMB PICTURE</th>
+          <th scope="col">TITLE</th>
+          <th scope="col">YEAR</th>
+          <th scope="col">MAKE</th>
+          <th scope="col">MODEL</th>
+          <th scope="col">CAR PRICE</th>
+          <th scope="col">ADD FAVOURITES</th>
         </tr>
       </thead>
       <tbody>
-        <% for(let url in urls) { %>
+        <!-- FOR LOOP STARTS -->
           <tr>
-            <td><%= url %></td>
-            <td><%= urls[url].longURL %></td>
-            <td><%= urls[url].createdAt %></td>
-            <td><form method="GET" action="/urls/<%= url %>">
-              <button type="submit" class="btn btn-outline-primary">Edit</button>
-            </form>
-            </td>
-            <td><form method="POST" action="/urls/<%= url %>/delete">
-              <button type="submit" class="btn btn-outline-danger">Delete</button>
+            <td>CAR PICTURE</td>
+            <td>TITLE:BLURB</td>
+            <td>YEAR: 2021</td>
+            <td>MAKE: HONDA</td>
+            <td>MODEL: CIVIC RS</td>
+            <td>$100000</td>
+            <td><form method="POST" action="/ENDPOINT/ID/ADD">
+              <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
 
             </form>
             </td>
           </tr>
-        <% } %>
+        <!-- FOR LOOP ENDS -->
       </tbody>
     </table>
   </main>

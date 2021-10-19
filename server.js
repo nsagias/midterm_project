@@ -55,7 +55,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/car", (req, res) => {
+app.get("/cars", (req, res) => {
   res.render("car_index");
 });
 

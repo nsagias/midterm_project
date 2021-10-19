@@ -14,9 +14,9 @@ INSERT INTO
   messages 
   (sent_date, email_id_sender, email_id_receiver, seller_id, car_id, buyer_id)
 VALUES
-  (2021-10-15, 'apple@gmail.com', 'notApple@gmail.com'           , 5, 1, 3),
-  (2021-10-15, 'pear@gmail.com', 'notPear@gmail.com'             , 5, 2, 3),
-  (2021-10-17, 'orange@gmail.com', 'notOrange@gmail.com'         , 5, 2, 3),
-  (2021-10-17, 'mango@gmail.com', 'notmang@gmail.com'            , 5, 2, 3),
-  (2021-10-18, 'pineApple@gmail.com', 'notPineApple@gmail.com'   , 4, 3, 1),
-  (2021-10-19, 'grape@gmail.com', 'notGrape@gmail.com'           , 4, 1, 2);
+  ('2021-10-15', 'apple@gmail.com', 'notApple@gmail.com'           , 5, 1, 3),
+  ('2021-10-15', 'pear@gmail.com', 'notPear@gmail.com'             , 5, 2, 3),
+  ('2021-10-17', 'orange@gmail.com', 'notOrange@gmail.com'         , 5, 2, 3),
+  ('2021-10-17', 'mango@gmail.com', 'notmang@gmail.com'            , 5, 2, 3),
+  ('2021-10-18', 'pineApple@gmail.com', 'notPineApple@gmail.com'   , 4, 3, 1),
+  ('2021-10-19', 'grape@gmail.com', 'notGrape@gmail.com'           , 4, 1, 2);

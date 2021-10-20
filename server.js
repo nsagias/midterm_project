@@ -144,8 +144,29 @@ app.get("/new", (req, res) => {
   res.render("car_new")
 });
 
+
 // Recieve new car form submission and send to db
 app.post("/new", (req, res) => {
+  //I'm decaring the function inside the route to keep everything together
+  const addCar = function (car) {
+    const queryParams = [car.seller_id, car.title, car.descriptions, car.year, car.make, car.model, car.model_colour, car.thumbnail_url, car.cover_url, car.car_price * 100];
+    const queryString = `
+    INSERT INTO cars (seller_id, title, descriptions, year, make, model, model_colour, thumbnail_url, cover_url, car_price)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    RETURNING *;
+    `;
+
+    return db
+      .query(queryString, queryParams);
+
+  };
+
+  const newListing = addCar(req.body)
+
+  newListing
+    .then(() => {
+      res.redirect("/new");
+    })
 
 });
 

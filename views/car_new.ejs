@@ -3,23 +3,25 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>URL - TinyApp Example</title>
+  <title>The Car Buy Place</title>
 </head>
 <header>
   <%- include('partials/_header') %>
 </header>
+
 <body>
   <div class="container d-flex justify-content-center">
   <h1>Add a new car</h1>
+
   <div>
-  <form action="/new" method="post" id="new-car-form" class="new-car-form">
+  <form method="POST" action="/new" id="new-car-form" class="new-car-form">
     <div class="form-group">
       <label for="new-car-form_title">Title</lable>
       <input type="text" name="title" placeholder="Title" id="new-car-form_title">
     </div>
     <div class="form-group">
       <label for="new-car-form_seller_id">Seller ID</lable>
-      <input type="text" name="seller_id" placeholder="Seller ID" id="new-car-form_seller_id">
+      <input type="number" name="seller_id" placeholder="Seller ID" id="new-car-form_seller_id">
     </div>
     <div class="form-goup">
       <label for="new-car-form_Descriptions">Description</label>
@@ -51,10 +53,10 @@
     </div>
     <div class="form-group">
       <label for="new-car-form_car_price">Price</lable>
-      <input type="text" placeholder="Price" name="car_price" id="new-car-form_car_price">
+      <input type="number" placeholder="Price" name="car_price" id="new-car-form_car_price">
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-success">Add the Car</button>
+      <button type="submit" class="btn btn-success">Add the Car</button>
     </div>
   </div>
   </form>

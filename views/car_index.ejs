@@ -22,6 +22,7 @@
         <tr>
           <th scope="col">CAR THUMB PICTURE</th>
           <th scope="col">TITLE</th>
+          <th scope="col">STATUS</th>
           <th scope="col">YEAR</th>
           <th scope="col">MAKE</th>
           <th scope="col">MODEL</th>
@@ -35,6 +36,13 @@
 
             <td><a href="/show/<%= cars[car].id %>"> <img  src= "<%= cars[car].thumbnail_url %>"></a></td>
             <td><%= cars[car].title %></td>
+          
+            <td><% if(cars[car].sold === true){ %>
+              <h1>SOLD!</h1>
+            <% } else{ %>  
+            
+           <% } %>
+             </td>
             <td><%= cars[car].year %></td>
             <td><%= cars[car].make %></td>
             <td><%= cars[car].model %></td>

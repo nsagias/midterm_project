@@ -32,8 +32,8 @@
       <tbody>
         <% for(let car in cars) { %>
           <tr>
-            
-            <td><a href=""> <img  src= "<%= cars[car].thumbnail_url %>"></a></td>
+
+            <td><a href="/show/<%= cars[car].id %>"> <img  src= "<%= cars[car].thumbnail_url %>"></a></td>
             <td><%= cars[car].title %></td>
             <td><%= cars[car].year %></td>
             <td><%= cars[car].make %></td>

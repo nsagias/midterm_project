@@ -70,7 +70,6 @@ const getAllCars = function(req, resp) {
       if (error) {
           throw error;
       }
-
       let result = {};
       cars = [...res.rows];
 

@@ -119,7 +119,27 @@ app.post("/delete", (req, res) => {
   deleted
     .then(() => res.render("car_new"));
 
-})
+});
+
+// MARK SOLD - marks a specific car id as sold in the db
+app.post("/sold", (req, res) => {
+  const markSold = function (id) {
+    const queryParams = [id];
+    const queryString = `
+    UPDATE cars
+    SET sold = TRUE
+    WHERE id = $1
+    ;`;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+  const sold = markSold(req.body.id);
+  sold
+    .then(() => res.render("car_new"));
+});
+
 
 
 // LOGIN STRETCH

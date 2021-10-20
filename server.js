@@ -58,7 +58,7 @@ app.get("/", (req, res) => {
 });
 
 
-// get all cars function 
+// get all cars function
 const getAllCars = function(req, resp) {
   const sql = `
       SELECT *
@@ -70,7 +70,8 @@ const getAllCars = function(req, resp) {
       if (error) {
           throw error;
       }
-      let result = {}; 
+
+      let result = {};
       cars = [...res.rows];
 
       for(let i = 0; i < cars.length; i++) {

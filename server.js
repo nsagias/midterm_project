@@ -61,8 +61,9 @@ app.get("/", (req, res) => {
 // get all cars function 
 const getAllCars = function(req, resp) {
   const sql = `
-      SELECT seller_id, title, year, make, model, thumbnail_url, cover_url, car_price
+      SELECT *
       FROM cars
+      WHERE delete_date is NULL
       `;
   db.query(sql, (error, res) => {
       let templateVars = {};
@@ -73,8 +74,10 @@ const getAllCars = function(req, resp) {
       cars = [...res.rows];
 
       for(let i = 0; i < cars.length; i++) {
+        // '0': {'thumb':url/}
         result[i] = cars[i]
       }
+      console.log('cars:', result);
 
       templateVars = {
         cars: result

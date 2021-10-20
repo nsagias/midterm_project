@@ -100,6 +100,27 @@ app.post("/new", (req, res) => {
 
 });
 
+// "Delete" a record (really just add a delete date)
+app.post("/delete", (req, res) => {
+  const markDeleted = function (id) {
+    const queryParams = [id];
+    const queryString = `
+    UPDATE cars
+    SET delete_date = CURRENT_DATE
+    WHERE id = $1
+    ;`;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+
+  const deleted = markDeleted(req.body.id);
+  deleted
+    .then(() => res.render("car_new"));
+
+})
+
 
 // LOGIN STRETCH
 // app.get("/login", (req, res) => {

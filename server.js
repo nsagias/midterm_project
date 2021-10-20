@@ -40,6 +40,7 @@ app.use(express.static("images"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
+const { Template } = require("ejs");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -52,13 +53,38 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
+
   res.render("index");
 });
 
-app.get("/cars", (req, res) => {
+const getAllCars = function(req, resp) {
+  const sql = `
+      SELECT seller_id, title, year, make, model, thumbnail_url, cover_url, car_price
+      FROM cars
+      `;
+  db.query(sql, (error, res) => {
+      let templateVars = {};
+      if (error) {
+          throw error;
+      }
+      let result = {}; 
+      cars = [...res.rows];
 
-  res.render("car_index");
-});
+      for(let i = 0; i < cars.length; i++) {
+        result[i] = cars[i]
+      }
+
+      templateVars = {
+        cars: result
+      }
+      
+      console.log(templateVars);
+      resp.render("car_index", {templateVars})
+  })
+};
+
+app.get("/cars", getAllCars);
+
 
 app.get("/cars/:user_id", (req, res) => {
 
@@ -112,5 +138,5 @@ app.post("/new", (req, res) => {
 // });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });

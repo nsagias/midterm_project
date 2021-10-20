@@ -7,6 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const nodemailer = require('nodemailer');
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -55,6 +56,35 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.get("/", (req, res) => {
 
   res.render("index");
+});
+
+// https://ethereal.email/
+const transporter = nodemailer.createTransport({
+  port: 587,
+  host: "smtp.ethereal.email",
+  auth: {
+      user: 'taylor.goyette26@ethereal.email',
+      pass: 'xKEGn6XhCcggMjzYjk',
+  },
+  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+});
+
+route.post('/text-mail', (req, res) => {
+  const {to, subject, text } = req.body;
+  const mailData = {
+      from: 'youremail@gmail.com',
+      to: to,
+      subject: subject,
+      text: text,
+      html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>',
+  };
+
+  transporter.sendMail(mailData, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      res.status(200).send({ message: "Mail send", message_id: info.messageId });
+  });
 });
 
 

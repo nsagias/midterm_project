@@ -60,6 +60,26 @@
     </div>
   </div>
   </form>
+
+  <form method="post" action="/delete" id="car-delete-form" class="car-delete-form">
+    <div class="form-group">
+      <label for="car-delete-form_id">Car ID to Delete</lable>
+      <input type="text" name="id" placeholder="Car ID" id="car-delete-form_id">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-danger">Delete Record</button>
+    </div>
+  </form>
+
+  <form method="post" action="/sold" id="car-sold-form" class="car-sold-form">
+    <div class="form-group">
+      <label for="car-sold-form_id">Sold Car ID</lable>
+      <input type="text" name="id" placeholder="Car ID" id="car-sold-form_id">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-warning">Mark Sold</button>
+    </div>
+  </form>
 </div>
 
 

@@ -212,71 +212,71 @@ app.post("/sold", (req, res) => {
 
 ////////////////////////////////////////////////////////////////
 
-/***************************************
- * Login
- * GET /login
- * Renders the login form
- ***************************************/
- app.get('/login', (req, res) => {
-  // get login page/form
-  const templateVars = { user: null };
-  res.render('login', templateVars);
-});
+// /***************************************
+//  * Login
+//  * GET /login
+//  * Renders the login form
+//  ***************************************/
+//  app.get('/login', (req, res) => {
+//   // get login page/form
+//   const templateVars = { user: null };
+//   res.render('login', templateVars);
+// });
 
 
-/***************************************
- * Login
- * POST /login
- * Redirects to GET /urls
- ***************************************/
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  // check if email or password are empty strings
+// /***************************************
+//  * Login
+//  * POST /login
+//  * Redirects to GET /urls
+//  ***************************************/
+// app.post("/login", (req, res) => {
+//   const { email, password } = req.body;
+//   // check if email or password are empty strings
 
-  // trim password and email
-  // avoid duplicated and getting around check
-  const emailT = email.trim();
-  const passwordT = password.trim();
+//   // trim password and email
+//   // avoid duplicated and getting around check
+//   const emailT = email.trim();
+//   const passwordT = password.trim();
 
-  if (emailT === '' || passwordT === '') {
-    statusCodeError = {
-      '400': 'Missing_Email_Or_Password',
-      message: 'Please Enter Email Or Password'
-    };
-    return res.status(400).redirect('400');
-  }
-  // get users from database
-  const usersDB = users;
+//   if (emailT === '' || passwordT === '') {
+//     statusCodeError = {
+//       '400': 'Missing_Email_Or_Password',
+//       message: 'Please Enter Email Or Password'
+//     };
+//     return res.status(400).redirect('400');
+//   }
+//   // get users from database
+//   const usersDB = users;
 
 
-  // check if is a current user
-  const isCurrentUser = findUserByEmail(emailT, usersDB);
-  // if no user found send 403 and message too register
-  if (!isCurrentUser) {
-    statusCodeError = {
-      '403': 'Not_User_Found',
-      message: 'Please Create Account'
-    };
-    return res.status(403).redirect('403');
-  }
+//   // check if is a current user
+//   const isCurrentUser = findUserByEmail(emailT, usersDB);
+//   // if no user found send 403 and message too register
+//   if (!isCurrentUser) {
+//     statusCodeError = {
+//       '403': 'Not_User_Found',
+//       message: 'Please Create Account'
+//     };
+//     return res.status(403).redirect('403');
+//   }
 
-  // Authenticale user returns user id
-  const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
-  // if password returns false 403 response
-  if (!isAuthenticated) {
-    statusCodeError = {
-      '403': 'Password_Does_Not_Match',
-      message: 'Password or login id does not match'
-    };
-    return res.status(403).redirect('403');
-  }
-  // add id to to session for valid user
-  const userID = isAuthenticated;
-  req.session.userID = userID;
+//   // Authenticale user returns user id
+//   const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
+//   // if password returns false 403 response
+//   if (!isAuthenticated) {
+//     statusCodeError = {
+//       '403': 'Password_Does_Not_Match',
+//       message: 'Password or login id does not match'
+//     };
+//     return res.status(403).redirect('403');
+//   }
+//   // add id to to session for valid user
+//   const userID = isAuthenticated;
+//   req.session.userID = userID;
 
-  // redirect to urls
-  res.redirect("urls");
-});
+//   // redirect to urls
+//   res.redirect("urls");
+// });
 
 // LOGIN STRETCH
 // app.get("/login", (req, res) => {

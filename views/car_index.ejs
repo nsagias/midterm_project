@@ -38,7 +38,7 @@
             <td><%= cars[car].year %></td>
             <td><%= cars[car].make %></td>
             <td><%= cars[car].model %></td>
-            <td><%= cars[car].car_price %></td>
+            <td>$<%= cars[car].car_price/100 %></td>
             <td><form method="POST" action="/ENDPOINT/ID/ADD">
               <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
 

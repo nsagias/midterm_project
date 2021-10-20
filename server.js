@@ -64,9 +64,26 @@ app.get("/cars/:user_id", (req, res) => {
 
   res.render("car_index");
 });
-
+//function for get the car details by id
+const getCardetailsByid=(id)=>{
+  const sql=`SELECT  descriptions,cover_url FROM cars WHERE id=$1`;
+  //converts the string to number
+  const values=[Number(id)];
+  return db.query(sql,values)
+  .then((res)=>{
+   return res.rows[0];
+  })
+  .catch(err=>err)
+}
 app.get("/show/:car_id", (req, res) => {
-  res.render("car_show")
+  const carID=req.params.car_id;
+  //console.log(carID)
+  getCardetailsByid(carID)
+  .then((data)=>{
+    console.log(data)
+    const templateVars={data}
+    res.render("car_show",templateVars)
+  })
 });
 
 // favourite feature related route

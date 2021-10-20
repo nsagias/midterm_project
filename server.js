@@ -57,6 +57,8 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+
+// get all cars function 
 const getAllCars = function(req, resp) {
   const sql = `
       SELECT seller_id, title, year, make, model, thumbnail_url, cover_url, car_price
@@ -76,12 +78,13 @@ const getAllCars = function(req, resp) {
 
       templateVars = {
         cars: result
-      }
-      
-      console.log(templateVars);
+      };
+
+      // console.log(templateVars);
       resp.render("car_index", {templateVars})
   })
 };
+
 
 app.get("/cars", getAllCars);
 

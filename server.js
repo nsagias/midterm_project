@@ -60,13 +60,12 @@ app.get("/", (req, res) => {
 
 // https://ethereal.email/
 const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
   port: 587,
-  host: "smtp.ethereal.email",
   auth: {
       user: 'taylor.goyette26@ethereal.email',
-      pass: 'xKEGn6XhCcggMjzYjk',
-  },
-  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+      pass: 'xKEGn6XhCcggMjzYjk'
+  }
 });
 
 route.post('/text-mail', (req, res) => {

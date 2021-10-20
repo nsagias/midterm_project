@@ -30,21 +30,22 @@
         </tr>
       </thead>
       <tbody>
-        <!-- FOR LOOP STARTS -->
+        <% for(let car in cars) { %>
           <tr>
-            <td>CAR PICTURE</td>
-            <td>TITLE:BLURB</td>
-            <td>YEAR: 2021</td>
-            <td>MAKE: HONDA</td>
-            <td>MODEL: CIVIC RS</td>
-            <td>$100000</td>
+            
+            <td><a href=""> <img  src= "<%= cars[car].thumbnail_url %>"></a></td>
+            <td><%= cars[car].title %></td>
+            <td><%= cars[car].year %></td>
+            <td><%= cars[car].make %></td>
+            <td><%= cars[car].model %></td>
+            <td>$<%= cars[car].car_price/100 %></td>
             <td><form method="POST" action="/ENDPOINT/ID/ADD">
               <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
 
             </form>
             </td>
           </tr>
-        <!-- FOR LOOP ENDS -->
+          <% } %>
       </tbody>
     </table>
   </main>

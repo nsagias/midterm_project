@@ -138,6 +138,8 @@ app.get("/favourites", (req, res) => {
     SELECT cars.id as id, seller_id, title, descriptions, year, make model, model_colour, thumbnail_url, cover_url, car_price, sold, delete_date
     FROM cars JOIN favourites ON car_id = cars.id
     WHERE buyer_id = $1
+    AND favourite_bool is TRUE
+    ORDER BY favourite_date DESC
     `;
 
     return db
@@ -167,7 +169,31 @@ app.get("/messages", (req, res) => {
 
 // favourite feature related route
 app.post("/favourites", (req, res) => {
+  const userID = req.session.userID;
+  const carID = (Number(req.body.carId));
 
+  if (!userID) {
+    res.redirect("/login");
+  }
+
+  const addToFavourites = function (user, car) {
+    const queryParams = [user, car];
+    const queryString = `
+    INSERT INTO favourites (buyer_id, car_id)
+    VALUES ($1, $2)
+    RETURNING *
+    `;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+  const newFavourite = addToFavourites(userID, carID);
+
+  newFavourite
+    .then(() => {
+      res.redirect("/cars");
+    })
 });
 
 // Display form to add a new car

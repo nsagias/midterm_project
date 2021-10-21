@@ -39,9 +39,10 @@
             <td><%= cars[car].make %></td>
             <td><%= cars[car].model %></td>
             <td>$<%= cars[car].car_price/100 %></td>
-            <td><form method="POST" action="/ENDPOINT/ID/ADD">
+            <td><form method="POST" action="/favourites">
               <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
-
+              <input type="hidden" name="carId" id="workaround-favourites_car_id">
+              <script type="text/javascript"> document.getElementById('workaround-favourites_car_id').value = "<%= cars[car].id %>";</script>
             </form>
             </td>
           </tr>

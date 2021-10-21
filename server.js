@@ -242,18 +242,10 @@ app.post("/sold", (req, res) => {
  * Redirects to GET /urls
  ***************************************/
 
-//  app.post("/new/login", (req, res) => {
-//   req.session.userID = req.body.id; //This value should look like a number between 1-7
-//   req.session.admin = true; //This value shoule be t for user 1 and user 7
-//   res.redirect("/new");
-// });
-
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
   // check if email or password are empty strings
-
   // trim password and email
-  // avoid duplicated and getting around check
   const emailT = email.trim();
   const passwordT = password.trim();
 
@@ -261,9 +253,9 @@ app.post("/login", (req, res) => {
    
     return res.status(400).redirect('/login');
   }
-  // get users from database
-    const usersDB = users;
-    // email='apple@gmail.com'
+    // get users from database
+    // const usersDB = users;
+  
     // select id, email, password, admin from users where email='apple@gmail.com';
     const findUserByEmail = function (emailT) {
       const queryParams = [emailT];
@@ -288,82 +280,42 @@ app.post("/login", (req, res) => {
   //   return undefined;
   // };
 
+  const isCurrentUser = findUserByEmail(emailT);
 
-
-  // if (!isCurrentUser) {
-    
-  //   return res.status(403).redirect('403');
-  // }
-   // check if is a current user
-   const isCurrentUser = findUserByEmail(emailT, usersDB);
-   // if no user found send 403 and message too register
-    const isCurrentUser = findUserByEmail(emailT);
+  if (!isCurrentUser) {
+    return res.status(403).redirect('/cars');
+  }
+   // Authenticale user returns user id
+  // const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
+    //   for (let user in usersDB) {
+  //     if (usersDB[user].email === email) {
+  //       let storedPassword = usersDB[user].password;
+  //       if (password === storedPassword) {
+  //         return usersDB[user].id;
+  //       }
+  //     }
+  //   }
+  // };
+  // if (!isAuthenticated) {
+   
+  //  if isAdmin  true
+   //   req.session.userID = req.body.id; //This value should look like a number between 1-7
+   //   req.session.admin = true; //This value shoule be t for user 1 and user 7
+   if(isAuthenticated === true && isAdmin === true){
     isCurrentUser
       .then((resp) => {
-        let cars = resp.rows;
-        let templateVars = {cars};
-        res.render("car_index", templateVars)
+        req.session.userID = req.body.id; // to be set with res 
+        req.session.admin = true;
+        res.redirect("car_new");
       })
-  
-    
-
-    // CREATE ONE OBJECT FOR A USER PULL FROM DATABASE
-    // MOVE ONE OBJECT THROUGH
-
-    // select id, email, password, admin from users where email='apple@gmail.com';
-    // 1 | apple@gmail.com | password | t
-    
- 
- 
-  const authenticateByPassword = (email, password, usersDB) => {
-
-    // add db query
-    // admin false
-    // select id, email, password, admin from users where email='apple@gmail.com';
-    // 1 | apple@gmail.com | password | f
-
-    // select id, email, password, admin from users where email='aadmin@gmail.com';
-    //  id |      email       | password | admin 
-    //  ----+------------------+----------+-------
-    //    7 | aadmin@gmail.com | password | t
-    
-    
-
-    for (let user in usersDB) {
-      if (usersDB[user].email === email) {
-        let storedPassword = usersDB[user].password;
-        if (password === storedPassword) {
-          return usersDB[user].id;
-        }
-      }
+   }
+   if(isAuthenticated === true && isAdmin === false){
+     isCurrentUser
+      .then((resp) => {
+        req.session.userID = req.body.id; //// to be set with res 
+        res.redirect("car_index");
+      })
     }
-  };
-
-  // Authenticale user returns user id
-  const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
-  // if password returns false 403 response
-  if (!isAuthenticated) {
-   
-    return res.status(403).redirect('403');
-  }
-  // if
-  //   req.session.userID = req.body.id; //This value should look like a number between 1-7
-  //   req.session.admin = true; //This value shoule be t for user 1 and user 7
-
-  /**
-   * add logic if userid is admin set userID as admin
-   * 
-   *   id |      email       | password | admin 
-    ----+------------------+----------+-------
-       7 | aadmin@gmail.com | password | t
-   * **/
-
-  // add id to to session for valid user
-  const userID = isAuthenticated;
-  req.session.userID = userID;
-
-  // redirect to urls
-  res.redirect("car_index");
 });
 
 

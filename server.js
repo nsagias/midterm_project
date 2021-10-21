@@ -52,6 +52,9 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+let statusCodeError = {};
+
+
 app.get("/", (req, res) => {
 
   res.render("index");
@@ -243,10 +246,10 @@ app.post("/login", (req, res) => {
       '400': 'Missing_Email_Or_Password',
       message: 'Please Enter Email Or Password'
     };
-    return res.status(400).redirect('400');
+    return res.status(400).redirect('car_index');
   }
   // get users from database
-  const usersDB = users;
+  //const usersDB = users;
 
 
   // check if is a current user
@@ -287,6 +290,45 @@ app.post("/login", (req, res) => {
 // app.get("/register", (req, res) => {
 //   res.render("register")
 // });
+
+app.post("/price", (rec, res) => {
+  //Setting the default values for max and min if not provided
+  let min = 0;
+  let max = 10000000;
+
+  if (rec.body.min_price) {
+    min = (rec.body.min_price * 100);
+  };
+
+  if (rec.body.max_price) {
+    max = (rec.body.max_price * 100);
+  };
+
+
+  const filterByPrice = function (minPrice, maxPrice) {
+    const queryParams = [minPrice, maxPrice];
+    const queryString = `
+    SELECT *
+    FROM cars
+    WHERE car_price >= $1
+    AND car_price <= $2
+    `;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+
+  const carsInPriceRange = filterByPrice(min, max);
+  carsInPriceRange
+    .then((response) => {
+      let cars = response.rows;
+      let templateVars = {cars};
+      res.render("car_index", templateVars)
+    })
+})
+
+
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

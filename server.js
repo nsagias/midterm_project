@@ -261,9 +261,16 @@ app.post("/login", (req, res) => {
   const usersDB = users;
 
   const findUserByEmail = (userEmail, usersDB) => {
-    // select * from users where email='userEmail;
-   // add db query
 
+    
+
+    // CREATE ONE OBJECT FOR A USER PULL FROM DATABASE
+    // MOVE ONE OBJECT THROUGH
+
+    // select id, email, password, admin from users where email='apple@gmail.com';
+    // 1 | apple@gmail.com | password | f
+    
+   
     for (let user in usersDB) {
       if (usersDB[user].email === userEmail) {
         return true;
@@ -273,6 +280,8 @@ app.post("/login", (req, res) => {
   };
 
 
+
+   
   // check if is a current user
   const isCurrentUser = findUserByEmail(emailT, usersDB);
   // if no user found send 403 and message too register

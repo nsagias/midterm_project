@@ -61,8 +61,8 @@
             <td>$<%= cars[car].car_price/100 %></td>
             <td><form method="POST" action="/favourites">
               <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
-              <input type="number" name="carId" id="index-favourites_car_id">
-              <script type="text/javascript"> document.getElementById('index-favourites_car_id').value = "<%= cars[car].id %>";</script>
+              <input type="number" name="carId" id= <%=`index-favourites_${cars[car].id}`%>>
+              <script type="text/javascript"> document.getElementById( `index-favourites_<%= cars[car].id %>`).value = "<%= cars[car].id %>";</script>
             </form>
             </td>
           </tr>

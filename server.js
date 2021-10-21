@@ -241,6 +241,18 @@ app.post("/sold", (req, res) => {
  * POST /login
  * Redirects to GET /urls
  ***************************************/
+
+//  app.post("/new/login", (req, res) => {
+//   req.session.userID = req.body.id; //This value should look like a number between 1-7
+//   req.session.admin = true; //This value shoule be t for user 1 and user 7
+//   res.redirect("/new");
+// });
+
+// app.post("/new/logout", (req, res) => {
+//   // set session value to null
+//   req.session = null;
+//   res.redirect("/new");
+// });
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
   // check if email or password are empty strings

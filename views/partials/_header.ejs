@@ -10,13 +10,26 @@
       </div>
     </div>
 
+     <!-- admin -->
+    <% if(false){ %>
       <form class="form-inline float-right" action="/logout" method="POST">
         <div class="form-group mb-2">
-
+          <h4 style="margin: 1em">Logged In As Admin </h4>
           <button type="submit" class="btn btn-outline-dark">Logout</button>
         </div>
       </form>
 
+     <!-- user -->
+      <% } else if (true){ %> 
+      <form class="form-inline float-right" action="/logout" method="POST">
+        <div class="form-group mb-2">
+          <h4 style="margin: 1em">Logged In As user.email  </h4>
+          <button type="submit" class="btn btn-outline-dark">Logout</button>
+        </div>
+      </form>
+
+      <!-- not logged in -->
+      <% } else { %> 
         <form class="form-inline float-right" action="/login" method="GET">
           <div class="form-group mb-2">
             <button type="submit" class="btn btn-outline-dark">Login</button>
@@ -27,6 +40,7 @@
             <button type="submit" class="btn btn-outline-dark">Register</button>
           </div>
         </form>
+    <% } %>
 
   </nav>
 </header>

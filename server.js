@@ -279,10 +279,11 @@ app.post("/login", (req, res) => {
    const bingo = findUserByEmail(emailT);
   //  bingo.then(resp => console.log({user:resp.rows}));
     bingo.then(resp => {
-          if (resp.rows[0].email !== 'aadmin@gmail.com') {
+          if (resp.rows[0].email !== emailT) {
             return isUser;
           }
-          console.log('email is set user to true isUser');
+          isUser = true;
+          console.log('isUser:',isUser);
 
           if (resp.rows[0].password !== 'password') {
             return isAuthenticated;
@@ -303,9 +304,9 @@ app.post("/login", (req, res) => {
           }
     });
 
-   console.log('this is bingo',bingo)
+    console.log('this is bingo',bingo)
     // select id, email, password, admin from users where email='apple@gmail.com';
- 
+
   // let isAdmin = false;
   // const isAuthenticated = findUserByEmail(emailT);
   // console.log('isAuth:',isAuthenticated);
@@ -321,21 +322,7 @@ app.post("/login", (req, res) => {
   // };
   
 
-  //  if(isAuthenticated === true && isAdmin === true){
-  //   isAuthenticated
-  //     .then((resp) => {
-  //       req.session.userID = resp.rows.id; // to be set with res 
-  //       req.session.admin = true;
-  //       res.redirect("car_new");
-  //     })
-  //  }
-  //  if(isAuthenticated === true && isAdmin === false){
-  //   isAuthenticated
-  //     .then((resp) => {
-  //       req.session.userID = resp.rows.id; //// to be set with res 
-  //       res.redirect("car_index");
-  //     })
-  //   }
+
 // end of login
 });
 

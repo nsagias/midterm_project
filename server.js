@@ -60,6 +60,14 @@ app.get("/", (req, res) => {
 
 // get all cars function
 const getAllCars = function(req, resp) {
+  // user id for logged in lookup
+  // const userId = req.session["userID"];
+
+  // if (!userId) {
+    
+    
+  // }
+
   const sql = `
       SELECT *
       FROM cars
@@ -74,8 +82,7 @@ const getAllCars = function(req, resp) {
       cars = [...res.rows];
 
       for(let i = 0; i < cars.length; i++) {
-        // '0': {'thumb':url/}
-        result[i] = cars[i]
+        result[i] = cars[i];
       }
       // console.log('cars:', result);
 
@@ -248,6 +255,17 @@ app.post("/login", (req, res) => {
   // get users from database
   const usersDB = users;
 
+  const findUserByEmail = (userEmail, usersDB) => {
+   // add db query
+
+    for (let user in usersDB) {
+      if (usersDB[user].email === userEmail) {
+        return true;
+      }
+    }
+    return undefined;
+  };
+
 
   // check if is a current user
   const isCurrentUser = findUserByEmail(emailT, usersDB);
@@ -260,6 +278,21 @@ app.post("/login", (req, res) => {
     return res.status(403).redirect('403');
   }
 
+  const authenticateByPassword = (email, password, usersDB) => {
+
+    // add db query
+
+
+    for (let user in usersDB) {
+      if (usersDB[user].email === email) {
+        let storedPassword = usersDB[user].password;
+        if (bcrypt.compareSync(password, storedPassword)) {
+          return usersDB[user].id;
+        }
+      }
+    }
+  };
+
   // Authenticale user returns user id
   const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
   // if password returns false 403 response
@@ -270,6 +303,11 @@ app.post("/login", (req, res) => {
     };
     return res.status(403).redirect('403');
   }
+
+  /**
+   * add logic if userid is admin set userID as admin
+   * **/
+
   // add id to to session for valid user
   const userID = isAuthenticated;
   req.session.userID = userID;

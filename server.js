@@ -254,50 +254,50 @@ app.post("/login", (req, res) => {
     return res.status(400).redirect('/login');
   }
   console.log(emailT, passwordT);
-    const findUserByEmail = function (emailT) {
-      const queryParams = [emailT];
-      const queryString = `
+  const findUserByEmail = function(emailT) {
+    const queryParams = [emailT];
+    const queryString = `
       SELECT *
       FROM users
       WHERE email = $1
       `;
-  
-      return db.query(queryString, queryParams);
-    }
-  
+
+    return db.query(queryString, queryParams);
+  }
+
   let isUser = undefined;
   let isAuthenticated = false;
   let isAmdin = false;
   let userID = null;
   const bingo = findUserByEmail(emailT);
-    bingo.then(resp => {
-      if (resp.rows[0].email !== emailT) {
-        res.status(400).redirect('/login');
-        return isUser;
-      }
-      isUser = true;
-      console.log('isUser:',isUser);
+  bingo.then(resp => {
+    if (resp.rows[0].email !== emailT) {
+      res.status(400).redirect('/login');
+      return isUser;
+    }
+    isUser = true;
+    console.log('isUser:', isUser);
 
-      if (resp.rows[0].password !== passwordT) {
-        res.status(400).redirect('/login');
-        return isAuthenticated;
-      }
-      isAuthenticated = true;
-      console.log('isAuthenticated:', isAuthenticated);
-    
-      if (resp.rows[0].id === 7) {
-        userID = resp.rows[0].id;
-        req.session.userID = userID;
-        console.log('userID:', userID);
-      }
+    if (resp.rows[0].password !== passwordT) {
+      res.status(400).redirect('/login');
+      return isAuthenticated;
+    }
+    isAuthenticated = true;
+    console.log('isAuthenticated:', isAuthenticated);
 
-      if (resp.rows[0].admin === true) {
-        isAmdin = true;
-        req.session.admin = isAmdin ;
-        console.log('isAdmin:', isAmdin);
-      }
-      res.redirect("/cars");
-    });
+    if (resp.rows[0].id === 7) {
+      userID = resp.rows[0].id;
+      req.session.userID = userID;
+      console.log('userID:', userID);
+    }
+
+    if (resp.rows[0].admin === true) {
+      isAmdin = true;
+      req.session.admin = isAmdin;
+      console.log('isAdmin:', isAmdin);
+    }
+    res.redirect("/cars");
+  });
 
     console.log('this is bingo',bingo)
 

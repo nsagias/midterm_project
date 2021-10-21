@@ -128,6 +128,38 @@
     </div>
   </form>
 
+  <div>
+    <form method="GET" action="/new">
+      <button type="submit" class="btn btn-success">GET MESSAGES</button>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">CAR ID</th>
+          <th scope="col">SELLER ID</th>
+          <th scope="col">SELLER EMAIL</th>
+          <th scope="col">BUYER ID</th>
+          <th scope="col">BUYER EMAIL</th>
+          <th scope="col">DATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let message in messages) { %>
+          <tr>
+
+            <td><a href="/show/<%= messages[message].id %>"> <%= messages[message].car_id %></a></td>
+            <td><%= messages[message].seller_id %></td>
+            <td><%= messages[message].seller_email %></td>
+            <td><%= messages[message].buyer_id %></td>
+            <td><%= messages[message].buyer_email %></td>
+            <td>$<%= messages[message].sent_date %></td>
+
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 </div>

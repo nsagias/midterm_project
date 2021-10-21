@@ -198,7 +198,25 @@ app.post("/favourites", (req, res) => {
 
 // Display form to add a new car
 app.get("/new", (req, res) => {
-  res.render("car_new")
+  const getMessaging = function() {
+    const queryString = `
+    SELECT *
+    FROM messages
+    ORDER BY sent_date DESC
+    LIMIT 10
+    `;
+
+    return db.query(queryString);
+  }
+  const latestMessaging = getMessaging();
+  latestMessaging
+    .then((response) => {
+      let messages = response.rows;
+      let templateVars = {messages};
+      console.log(templateVars);
+      res.render("car_new", templateVars)
+    });
+
 });
 
 

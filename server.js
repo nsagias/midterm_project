@@ -255,7 +255,7 @@ app.post("/login", (req, res) => {
       '400': 'Missing_Email_Or_Password',
       message: 'Please Enter Email Or Password'
     };
-    return res.status(400).redirect('400');
+    return res.status(400).redirect('/login');
   }
   // get users from database
   const usersDB = users;

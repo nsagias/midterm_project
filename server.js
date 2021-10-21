@@ -285,7 +285,7 @@ app.post("/login", (req, res) => {
           isUser = true;
           console.log('isUser:',isUser);
 
-          if (resp.rows[0].password !== 'password') {
+          if (resp.rows[0].password !== passwordT) {
             return isAuthenticated;
           }
           isAuthenticated = true;
@@ -305,22 +305,6 @@ app.post("/login", (req, res) => {
     });
 
     console.log('this is bingo',bingo)
-    // select id, email, password, admin from users where email='apple@gmail.com';
-
-  // let isAdmin = false;
-  // const isAuthenticated = findUserByEmail(emailT);
-  // console.log('isAuth:',isAuthenticated);
-  // if (!isAuthenticated) {
-  //   return res.status(403).redirect('/cars');
-  // }
-  //   for (let user in usersDB) {
-  //     if (usersDB[user].email === userEmail) {
-  //       return true;
-  //     }
-  //   }
-  //   return undefined;
-  // };
-  
 
 
 // end of login

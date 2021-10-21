@@ -7,17 +7,11 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const bodyParser=require('body-parser')
+const bodyParser=require('body-parser');
+const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const nodemailer = require('nodemailer');
 
-
-// Require Cookie Sesson
-const cookieSession = require("cookie-session");
-app.use(cookieSession({
-  name: 'session',
-  keys: ["This is a key for my project", "This is a second key and is really cool!"]
-}));
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -414,7 +408,7 @@ app.post("/sold", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  
+
   const emailT = email.trim();
   const passwordT = password.trim();
 
@@ -439,7 +433,7 @@ app.post("/login", (req, res) => {
   let userID = null;
 
   const bingo = findUserByEmail(emailT);
-  
+
   bingo.then(resp => {
     if (resp.rows[0].email !== emailT) {
       res.status(400).redirect('/login');

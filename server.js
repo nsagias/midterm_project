@@ -130,6 +130,27 @@ app.get("/show/:car_id", (req, res) => {
 
 // favourite feature related route (filters the index view by favourite)
 app.get("/favourites", (req, res) => {
+  const userID = req.session.userID;
+
+  const filterByFavourites = function (buyer_id) {
+    const queryParams = [buyer_id];
+    const queryString = `
+    SELECT cars.id as id, seller_id, title, descriptions, year, make model, model_colour, thumbnail_url, cover_url, car_price, sold, delete_date
+    FROM cars JOIN favourites ON car_id = cars.id
+    WHERE buyer_id = $1
+    `;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+  const carsInFavourites = filterByFavourites(userID);
+  carsInFavourites
+    .then((response) => {
+      let cars = response.rows;
+      let templateVars = {cars};
+      res.render("car_index", templateVars)
+    })
 
 });
 
@@ -337,7 +358,6 @@ app.post("/price", (rec, res) => {
 
 // Created a work around to put a cookie for testing
 app.post("/new/login", (req, res) => {
-  console.log(req.body.id);
   req.session.userID = req.body.id;
   req.session.admin = true;
   res.redirect("/new");

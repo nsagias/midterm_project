@@ -112,6 +112,22 @@
     </div>
   </form>
 
+  <form method="POST" action="/favourites" id="workaround-favourites-form" class="favourites-form">
+    <div class="form-group">
+      <label for="workaround-favourites_car_id">Choose car ID</lable>
+      <input type="number" name="carId" placeholder="carId" id="workaround-favourites_car_id">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">ADD FAVOURITE</button>
+    </div>
+  </form>
+
+  <form method="GET" action="/favourites" id="workaround-favourites-form" class="favourites-form">
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">GET FAVOURITES</button>
+    </div>
+  </form>
+
 </div>
 
 </div>

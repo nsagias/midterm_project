@@ -153,10 +153,10 @@
 
             <td><a href="/show/<%= messages[message].id %>"> <%= messages[message].car_id %></a></td>
             <td><%= messages[message].seller_id %></td>
-            <td><%= messages[message].seller_email %></td>
+            <td><%= messages[message].email_id_receiver %></td>
             <td><%= messages[message].buyer_id %></td>
-            <td><%= messages[message].buyer_email %></td>
-            <td>$<%= messages[message].sent_date %></td>
+            <td><%= messages[message].email_id_sender %></td>
+            <td><%= messages[message].sent_date %></td>
 
           </tr>
           <% } %>

@@ -155,7 +155,7 @@ const getAllCars = function(req, resp) {
         cars: result
       };
 
-      console.log(templateVars);
+      //console.log(templateVars);
       resp.render("car_index", {templateVars})
   })
 };

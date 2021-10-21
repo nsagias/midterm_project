@@ -221,6 +221,10 @@ app.get("/show/:car_id", (req, res) => {
 app.get("/favourites", (req, res) => {
   const userID = req.session.userID;
 
+  if (!userID) {
+    return res.redirect("/login");
+  }
+
   const filterByFavourites = function (buyer_id) {
     const queryParams = [buyer_id];
     const queryString = `
@@ -436,14 +440,14 @@ app.post("/login", (req, res) => {
 
   bingo.then(resp => {
     if (resp.rows[0].email !== emailT) {
-      res.status(400).redirect('/login');
+      res.redirect('/login');
       return isUser;
     }
     isUser = true;
     console.log('isUser:', isUser);
 
     if (resp.rows[0].password !== passwordT) {
-      res.status(400).redirect('/login');
+      res.redirect('/login');
       return isAuthenticated;
     }
     isAuthenticated = true;
@@ -461,7 +465,8 @@ app.post("/login", (req, res) => {
       console.log('isAdmin:', isAdmin);
     }
     res.redirect("/cars");
-  });
+  })
+  .catch((resp) => console.log(resp));
 
     console.log('this is bingo',bingo)
 

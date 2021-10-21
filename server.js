@@ -246,20 +246,14 @@ app.post("/sold", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  // test data
-  // let email = 'apple@gmail.com';
-  // let password = 'password';
-  // check if email or password are empty strings
-  // trim password and email
-  // ('Adam Administrator', 'aadmin@gmail.com', 'password', '519-999-9595', TRUE);
+  
   const emailT = email.trim();
   const passwordT = password.trim();
 
   if (emailT === '' || passwordT === '') {
     return res.status(400).redirect('/login');
   }
-  console.log(emailT, passwordT)
-    // // select id, email, password, admin from users where email='apple@gmail.com';
+  console.log(emailT, passwordT);
     const findUserByEmail = function (emailT) {
       const queryParams = [emailT];
       const queryString = `
@@ -270,14 +264,12 @@ app.post("/login", (req, res) => {
   
       return db.query(queryString, queryParams);
     }
-  //  req.session.userID = resp.rows.id; // to be set with res 
-  //  req.session.admin = true;
+  
   let isUser = undefined;
   let isAuthenticated = false;
   let isAmdin = false;
   let userID = null;
    const bingo = findUserByEmail(emailT);
-  //  bingo.then(resp => console.log({user:resp.rows}));
     bingo.then(resp => {
           if (resp.rows[0].email !== emailT) {
             res.status(400).redirect('/login');

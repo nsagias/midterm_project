@@ -72,9 +72,33 @@ app.get("/", (req, res) => {
 });
 
 app.post('/messages',async(req,res)=>{
-  const{email, sender_email, emailContent,subject}=req.body;
-  console.log(req.body);
-  console.log(req.body.email)
+  const user_id = req.session.userID;
+  const{car_id, email, sender_email, emailContent,subject}=req.body;
+  const car_id_num = Number(car_id)
+  console.log(car_id_num);
+  // if user is not logged in, they are redirected to the login page
+  if (!user_id) {
+    res.redirect("/login");
+  }
+  // adding a record of the message event to the messages db if it is sent by a user. (The admin messaging isn't tracked.)
+  //if (car_id) {
+    const addMessageRecord = function(car_id, user_id, seller_email, buyer_email) {
+      const queryParams = [car_id, user_id, seller_email, buyer_email];
+      const queryString = `
+      INSERT INTO messages (car_id, buyer_id, email_id_receiver, email_id_sender, seller_id)
+      VALUES ($1, $2, $3, $4, (
+        SELECT seller_id
+        FROM cars
+        WHERE id = $1
+        ))
+      `;
+
+      return db
+        .query(queryString, queryParams);
+    }
+    addMessageRecord(car_id_num, user_id, email, sender_email).then((res) => console.log(res));
+  //}
+
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,

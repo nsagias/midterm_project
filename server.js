@@ -343,7 +343,7 @@ app.post("/sold", (req, res) => {
 
   const sold = markSold(req.body.id);
   sold
-    .then(() => res.render("car_new"));
+    .then(() => res.redirect("/new"));
 });
 
 ////////////////////////////////////////////////////////////////

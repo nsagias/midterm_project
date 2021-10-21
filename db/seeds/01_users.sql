@@ -1,7 +1,7 @@
 -- Users table seeds here (Example)
 INSERT INTO users (name, email, password, phone, admin)
 VALUES
-  ('Andy Apple', 'apple@gmail.com', 'password', '519-303-3030', FALSE),
+  ('Andy Apple', 'apple@gmail.com', 'password', '519-303-3030', TRUE),
   ('Julie Orange', 'orange@gmail.com', 'password', '647-898-9898', FALSE),
   ('Manny Mango', 'mango@gmail.com', 'password', '123-456-7890', FALSE),
   ('Peter Pear', 'pear@gmail.com', 'password', '345-543-3456', FALSE),

@@ -14,14 +14,14 @@
 <body>
   <main style="margin: 1em;">
     <h3>NEW CARS FOR SALES</h3>
-    <% if(false){ %>
+    <% if(true){ %>
       <form method="GET" action="/ENPOINT/FAVOURITES">
         <button type="submit" class="btn btn-success">GET MY FAVOURITES</button>
       </form>
-    <% } else{ %>  
+    <% } else{ %>
     <!-- not button if not logged in -->
    <% } %>
-   
+
     <div class="d-flex justify-content-center">
     <form action="">
       <input type="text" name="min_price" id="" placeholder="Min Price">
@@ -48,11 +48,11 @@
 
             <td><a href="/show/<%= cars[car].id %>"> <img  src= "<%= cars[car].thumbnail_url %>"></a></td>
             <td><%= cars[car].title %></td>
-          
+
             <td><% if(cars[car].sold === true){ %>
               <h1>SOLD!</h1>
-            <% } else{ %>  
-            
+            <% } else{ %>
+
            <% } %>
              </td>
             <td><%= cars[car].year %></td>

@@ -250,6 +250,7 @@ app.post("/login", (req, res) => {
   // let password = 'password';
   // check if email or password are empty strings
   // trim password and email
+  // ('Adam Administrator', 'aadmin@gmail.com', 'password', '519-999-9595', TRUE);
   const emailT = email.trim();
   const passwordT = password.trim();
 
@@ -269,7 +270,27 @@ app.post("/login", (req, res) => {
       return db.query(queryString, queryParams);
     }
    const bingo = findUserByEmail(emailT);
-   bingo.then(resp => console.log(resp.rows));
+  //  bingo.then(resp => console.log({user:resp.rows}));
+  bingo.then(resp => console.log(
+         {
+          id:resp.rows[0].id,
+          email:resp.rows[0].email,
+          password:resp.rows[0].password,
+          admin:resp.rows[0].admin
+        }
+        ));
+  // bingo.then(resp => console.log(
+  //   {
+  //     id:resp.rows[0].id,
+  //     email:resp.rows[0].email,
+  //     password:resp.rows[0].password,
+  //     admin:resp.rows[0].admin
+  //   }
+  //   ));
+  //  users.user[0].id
+  //  .then((resp) => {
+  //         req.session.userID = resp.rows.id; // to be set with res 
+  //         req.session.admin = true;
    console.log('this is bingo',bingo)
     // select id, email, password, admin from users where email='apple@gmail.com';
  

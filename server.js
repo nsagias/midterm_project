@@ -251,10 +251,7 @@ app.post("/login", (req, res) => {
   const passwordT = password.trim();
 
   if (emailT === '' || passwordT === '') {
-    statusCodeError = {
-      '400': 'Missing_Email_Or_Password',
-      message: 'Please Enter Email Or Password'
-    };
+   
     return res.status(400).redirect('/login');
   }
   // get users from database
@@ -286,10 +283,7 @@ app.post("/login", (req, res) => {
   const isCurrentUser = findUserByEmail(emailT, usersDB);
   // if no user found send 403 and message too register
   if (!isCurrentUser) {
-    statusCodeError = {
-      '403': 'Not_User_Found',
-      message: 'Please Create Account'
-    };
+    
     return res.status(403).redirect('403');
   }
 
@@ -321,10 +315,7 @@ app.post("/login", (req, res) => {
   const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
   // if password returns false 403 response
   if (!isAuthenticated) {
-    statusCodeError = {
-      '403': 'Password_Does_Not_Match',
-      message: 'Password or login id does not match'
-    };
+   
     return res.status(403).redirect('403');
   }
 

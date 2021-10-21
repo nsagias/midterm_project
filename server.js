@@ -248,11 +248,6 @@ app.post("/sold", (req, res) => {
 //   res.redirect("/new");
 // });
 
-// app.post("/new/logout", (req, res) => {
-//   // set session value to null
-//   req.session = null;
-//   res.redirect("/new");
-// });
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
   // check if email or password are empty strings
@@ -267,38 +262,72 @@ app.post("/login", (req, res) => {
     return res.status(400).redirect('/login');
   }
   // get users from database
-  const usersDB = users;
+  
 
-  const findUserByEmail = (userEmail, usersDB) => {
+    // const filterByPrice = function (minPrice, maxPrice) {
+    //   const queryParams = [minPrice, maxPrice];
+    //   const queryString = `
+    //   SELECT *
+    //   FROM cars
+    //   WHERE car_price >= $1
+    //   AND car_price <= $2
+    //   `;
+  
+    //   return db.query(queryString, queryParams);
+    // }
+    const usersDB = users;
+    // email='apple@gmail.com'
+    // select id, email, password, admin from users where email='apple@gmail.com';
+    const findUserByEmail = function (emailT) {
+      const queryParams = [emailT];
+      const queryString = `
+      SELECT *
+      FROM users
+      WHERE email = emailT
+      `;
+  
+      return db.query(queryString, queryParams);
+    }
+    
+    // if true => return  user
+    // select id, email, password, admin from users where email='apple@gmail.com';
+    // 1 | apple@gmail.com | password | t
 
+  //   for (let user in usersDB) {
+  //     if (usersDB[user].email === userEmail) {
+  //       return true;
+  //     }
+  //   }
+  //   return undefined;
+  // };
+
+
+
+  // if (!isCurrentUser) {
+    
+  //   return res.status(403).redirect('403');
+  // }
+   // check if is a current user
+   const isCurrentUser = findUserByEmail(emailT, usersDB);
+   // if no user found send 403 and message too register
+    const isCurrentUser = findUserByEmail(emailT);
+    isCurrentUser
+      .then((resp) => {
+        let cars = resp.rows;
+        let templateVars = {cars};
+        res.render("car_index", templateVars)
+      })
+  
     
 
     // CREATE ONE OBJECT FOR A USER PULL FROM DATABASE
     // MOVE ONE OBJECT THROUGH
 
     // select id, email, password, admin from users where email='apple@gmail.com';
-    // 1 | apple@gmail.com | password | f
+    // 1 | apple@gmail.com | password | t
     
-   
-    for (let user in usersDB) {
-      if (usersDB[user].email === userEmail) {
-        return true;
-      }
-    }
-    return undefined;
-  };
-
-
-
-   
-  // check if is a current user
-  const isCurrentUser = findUserByEmail(emailT, usersDB);
-  // if no user found send 403 and message too register
-  if (!isCurrentUser) {
-    
-    return res.status(403).redirect('403');
-  }
-
+ 
+ 
   const authenticateByPassword = (email, password, usersDB) => {
 
     // add db query

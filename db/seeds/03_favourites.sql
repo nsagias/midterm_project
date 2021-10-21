@@ -8,8 +8,8 @@
 -- );
 -- favourite might need to be default TRUE at creation and then set to false
 
-INSERT INTO 
-  favourites 
+INSERT INTO
+  favourites
   (favourite_date, car_id, buyer_id, favourite_bool)
 VALUES
   ('2021-10-17', 1, 1, FALSE),
@@ -18,11 +18,10 @@ VALUES
   ('2021-10-15', 1, 4, TRUE),
   ('2021-10-18', 2, 1, TRUE),
   ('2021-10-17', 3, 2, TRUE),
-  ('2021-10-18', 4, 3, TRUE),
-  ('2021-10-13', 5, 4, TRUE),
-  ('2021-10-18', 2, 1, TRUE),
-  ('2021-10-17', 3, 2, TRUE),
+  ('2021-10-18', 4, 5, TRUE),
+  ('2021-10-13', 5, 6, TRUE),
+  ('2021-10-18', 5, 1, TRUE),
+  ('2021-10-17', 3, 3, TRUE),
   ('2021-10-18', 4, 3, TRUE),
   ('2021-10-13', 5, 4, TRUE);
- 
- 
+

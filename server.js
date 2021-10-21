@@ -7,6 +7,9 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const bodyParser=require('body-parser')
+const nodemailer = require('nodemailer');
+
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -18,8 +21,9 @@ db.connect();
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
-
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 
 
@@ -56,6 +60,35 @@ app.get("/", (req, res) => {
 
   res.render("index");
 });
+
+app.post('/messages',async(req,res)=>{
+  const{email,emailContent,subject}=req.body;
+  console.log(req.body.email)
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: 'bessie.schiller54@ethereal.email', // generated ethereal user
+      pass: 'NtKGqxXMqAPCn4tzQQ', // generated ethereal password
+    },
+  });
+
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: 'bessie.schiller54@ethereal.email', // sender address
+    to: `${email}`, // list of receivers
+    subject: `${subject}`, // Subject line
+    text:`${emailContent}`, // plain text body // html body
+  });
+
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  res.send("email has send")
+})
 
 
 // get all cars function

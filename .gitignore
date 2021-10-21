@@ -3,5 +3,10 @@ public/styles
 .env
 *.log
 *.sqlite3
+<<<<<<< HEAD
 credentials.csv
 email.txt
+=======
+email.txt
+credentials.csv
+>>>>>>> feature/emailsender

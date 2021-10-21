@@ -8,6 +8,13 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 
+// Require Cookie Sesson
+const cookieSession = require("cookie-session");
+app.use(cookieSession({
+  name: 'session',
+  keys: ["This is a key for my project", "This is a second key and is really cool!"]
+}));
+
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
@@ -332,6 +339,7 @@ app.post("/price", (rec, res) => {
 app.post("/new/login", (req, res) => {
   req.session.userID = 3;
   req.session.admin = true;
+  res.redirect("/new");
 });
 
 app.post("/new/logout", (req, res) => {

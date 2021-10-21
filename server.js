@@ -263,7 +263,7 @@ app.post("/favourites", (req, res) => {
   const carID = (Number(req.body.carId));
 
   if (!userID) {
-    res.redirect("/login");
+    return res.redirect("/login");
   }
 
   const addToFavourites = function (user, car) {

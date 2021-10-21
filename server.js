@@ -269,22 +269,34 @@ app.post("/login", (req, res) => {
   
       return db.query(queryString, queryParams);
     }
+  //  req.session.userID = resp.rows.id; // to be set with res 
+  //  req.session.admin = true;
+  let isUser = undefined;
+  let isAuthenticated = false;
+  let isAmdin = false;
+  let userID = null;
    const bingo = findUserByEmail(emailT);
   //  bingo.then(resp => console.log({user:resp.rows}));
     bingo.then(resp => {
-          if (resp.rows[0].email === 'aadmin@gmail.com') {
-            console.log('email is set user to true isUser ')
+          if (resp.rows[0].email !== 'aadmin@gmail.com') {
+            return isUser;
           }
-          if (resp.rows[0].password === 'password') {
-            console.log('password set user as authetnicated isAuthenticated')
-
+          console.log('email is set user to true isUser')
+          if (resp.rows[0].password !== 'password') {
+            return isAuthenticated;
           }
+          console.log('password set user as authetnicated isAuthenticated')
+         
+          if (resp.rows[0].id === 7) {
+            console.log('set user id ');
+            userID = resp.rows[0].id;
+            req.session.userID = userID;
+          }
+          
           if (resp.rows[0].admin === true) {
             console.log('Admin is true, set user Admin')
-
-          }
-          if (resp.rows[0].id === 7) {
-            console.log('set id as true')
+            isAmdin = true;
+            req.session.admin = true;
           }
     });
   // bingo.then(resp => console.log(

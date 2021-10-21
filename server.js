@@ -224,6 +224,18 @@ app.post("/sold", (req, res) => {
     .then(() => res.render("car_new"));
 });
 
+/***************************************
+ * Logout
+ * POST /logout
+ * Clears session values
+ * Redirects to root /GET/
+ ***************************************/
+ app.post("/logout", (req, res) => {
+  // set session value to null
+  req.session = null;
+  res.redirect("/");
+});
+
 
 
 /***************************************

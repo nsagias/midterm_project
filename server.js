@@ -47,6 +47,7 @@ app.use(express.static("images"));
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const { Template } = require("ejs");
+const { isDate } = require("moment");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -281,36 +282,27 @@ app.post("/login", (req, res) => {
           if (resp.rows[0].email !== 'aadmin@gmail.com') {
             return isUser;
           }
-          console.log('email is set user to true isUser')
+          console.log('email is set user to true isUser');
+
           if (resp.rows[0].password !== 'password') {
             return isAuthenticated;
           }
-          console.log('password set user as authetnicated isAuthenticated')
-         
+          isAuthenticated = true;
+          console.log('isAuthenticated:', isAuthenticated);
+        
           if (resp.rows[0].id === 7) {
-            console.log('set user id ');
             userID = resp.rows[0].id;
             req.session.userID = userID;
+            console.log('userID:', userID);
           }
-          
+
           if (resp.rows[0].admin === true) {
-            console.log('Admin is true, set user Admin')
             isAmdin = true;
-            req.session.admin = true;
+            req.session.admin = isAmdin ;
+            console.log('isAdmin:', isAmdin);
           }
     });
-  // bingo.then(resp => console.log(
-  //   {
-  //     id:resp.rows[0].id,
-  //     email:resp.rows[0].email,
-  //     password:resp.rows[0].password,
-  //     admin:resp.rows[0].admin
-  //   }
-  //   ));
-  //  users.user[0].id
-  //  .then((resp) => {
-  //         req.session.userID = resp.rows.id; // to be set with res 
-  //         req.session.admin = true;
+
    console.log('this is bingo',bingo)
     // select id, email, password, admin from users where email='apple@gmail.com';
  

@@ -15,7 +15,7 @@
   <main style="margin: 1em;">
     <h3>NEW CARS FOR SALES</h3>
     <% if(true){ %>
-      <form method="GET" action="/ENPOINT/FAVOURITES">
+      <form method="GET" action="/favourites">
         <button type="submit" class="btn btn-success">GET MY FAVOURITES</button>
       </form>
     <% } else{ %>
@@ -23,9 +23,9 @@
    <% } %>
 
     <div class="d-flex justify-content-center">
-    <form action="">
-      <input type="text" name="min_price" id="" placeholder="Min Price">
-      <input type="text" name="max_price" id="" placeholder="Max Price">
+    <form method="post" action="/price" id="filter_form">
+      <input type="number" name="min_price" id="" placeholder="Min Price">
+      <input type="number" name="max_price" id="" placeholder="Max Price">
       <button type="submit" class="btn btn-success">FILTER BY PRICE</button>
     </form>
   </div>
@@ -61,8 +61,8 @@
             <td>$<%= cars[car].car_price/100 %></td>
             <td><form method="POST" action="/favourites">
               <button type="submit" class="btn btn-success">ADD TO FAVOURITES</button>
-              <input type="hidden" name="carId" id="workaround-favourites_car_id">
-              <script type="text/javascript"> document.getElementById('workaround-favourites_car_id').value = "<%= cars[car].id %>";</script>
+              <input type="number" name="carId" id="index-favourites_car_id">
+              <script type="text/javascript"> document.getElementById('index-favourites_car_id').value = "<%= cars[car].id %>";</script>
             </form>
             </td>
           </tr>

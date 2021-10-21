@@ -155,7 +155,7 @@ const getAllCars = function(req, resp) {
         cars: result
       };
 
-      // console.log(templateVars);
+      console.log(templateVars);
       resp.render("car_index", {templateVars})
   })
 };
@@ -231,7 +231,7 @@ app.get("/messages", (req, res) => {
 
 });
 
-// favourite feature related route
+// favourite feature related route add to favourite
 app.post("/favourites", (req, res) => {
   const userID = req.session.userID;
   console.log(req.body.carID);
@@ -430,7 +430,7 @@ app.post("/sold", (req, res) => {
 app.post("/price", (rec, res) => {
   //Setting the default values for max and min if not provided
   let min = 0;
-  let max = 10000000;
+  let max = 1000000000;
 
   if (rec.body.min_price) {
     min = (rec.body.min_price * 100);

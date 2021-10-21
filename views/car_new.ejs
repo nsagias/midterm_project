@@ -80,6 +80,88 @@
       <button type="submit" class="btn btn-warning">Mark Sold</button>
     </div>
   </form>
+
+
+  <form method="post" action="/price" id="filter-form" class="filter-form">
+    <div class="form-group">
+      <label for="filter_min_price">min price</lable>
+      <input type="number" name="min_price" placeholder="min Price" id="car-sold-form_id">
+    </div>
+    <div class="form-group">
+      <label for="filter_max_price">max price</lable>
+      <input type="number" name="max_price" placeholder="Max Price" id="car-sold-form_id">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-warning">Filter Results</button>
+    </div>
+  </form>
+
+  <form method="post" action="/new/login" id="workaround-login-form" class="login-form">
+    <div class="form-group">
+      <label for="workaround-login_user_number">Choose User ID</lable>
+      <input type="number" name="id" placeholder="User ID" id="workaround-login_user_number">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Login!</button>
+    </div>
+  </form>
+
+  <form method="post" action="/new/logout" id="workaround-logout-form" class="logout-form">
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Logout!</button>
+    </div>
+  </form>
+
+  <form method="POST" action="/favourites" id="workaround-favourites-form" class="favourites-form">
+    <div class="form-group">
+      <input type="hidden" name="carId" id="workaround-favourites_car_id">
+      <script type="text/javascript"> document.getElementById('workaround-favourites_car_id').value = "3";</script>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">ADD FAVOURITE</button>
+    </div>
+  </form>
+
+  <form method="GET" action="/favourites" id="workaround-favourites-form" class="favourites-form">
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">GET FAVOURITES</button>
+    </div>
+  </form>
+
+  <div>
+    <form method="GET" action="/new">
+      <button type="submit" class="btn btn-success">GET MESSAGES</button>
+    </form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">CAR ID</th>
+          <th scope="col">SELLER ID</th>
+          <th scope="col">SELLER EMAIL</th>
+          <th scope="col">BUYER ID</th>
+          <th scope="col">BUYER EMAIL</th>
+          <th scope="col">DATE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let message in messages) { %>
+          <tr>
+
+            <td><a href="/show/<%= messages[message].id %>"> <%= messages[message].car_id %></a></td>
+            <td><%= messages[message].seller_id %></td>
+            <td><%= messages[message].seller_email %></td>
+            <td><%= messages[message].buyer_id %></td>
+            <td><%= messages[message].buyer_email %></td>
+            <td>$<%= messages[message].sent_date %></td>
+
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
 </div>
 <form action="/adminmessage" method="post">
   <input type="text" name="subject" placeholder="The car buy place">

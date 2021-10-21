@@ -11,6 +11,13 @@ const bodyParser=require('body-parser')
 const nodemailer = require('nodemailer');
 
 
+// Require Cookie Sesson
+const cookieSession = require("cookie-session");
+app.use(cookieSession({
+  name: 'session',
+  keys: ["This is a key for my project", "This is a second key and is really cool!"]
+}));
+
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
@@ -55,6 +62,9 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
+
+let statusCodeError = {};
+
 
 app.get("/", (req, res) => {
 
@@ -179,8 +189,31 @@ app.get("/show/:car_id", (req, res) => {
   })
 });
 
-// favourite feature related route
+// favourite feature related route (filters the index view by favourite)
 app.get("/favourites", (req, res) => {
+  const userID = req.session.userID;
+
+  const filterByFavourites = function (buyer_id) {
+    const queryParams = [buyer_id];
+    const queryString = `
+    SELECT cars.id as id, seller_id, title, descriptions, year, make model, model_colour, thumbnail_url, cover_url, car_price, sold, delete_date
+    FROM cars JOIN favourites ON car_id = cars.id
+    WHERE buyer_id = $1
+    AND favourite_bool is TRUE
+    ORDER BY favourite_date DESC
+    `;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+  const carsInFavourites = filterByFavourites(userID);
+  carsInFavourites
+    .then((response) => {
+      let cars = response.rows;
+      let templateVars = {cars};
+      res.render("car_index", templateVars)
+    })
 
 });
 
@@ -197,12 +230,54 @@ app.get("/messages", (req, res) => {
 
 // favourite feature related route
 app.post("/favourites", (req, res) => {
+  const userID = req.session.userID;
+  const carID = (Number(req.body.carId));
 
+  if (!userID) {
+    res.redirect("/login");
+  }
+
+  const addToFavourites = function (user, car) {
+    const queryParams = [user, car];
+    const queryString = `
+    INSERT INTO favourites (buyer_id, car_id)
+    VALUES ($1, $2)
+    RETURNING *
+    `;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+  const newFavourite = addToFavourites(userID, carID);
+
+  newFavourite
+    .then(() => {
+      res.redirect("/cars");
+    })
 });
 
 // Display form to add a new car
 app.get("/new", (req, res) => {
-  res.render("car_new")
+  const getMessaging = function() {
+    const queryString = `
+    SELECT *
+    FROM messages
+    ORDER BY sent_date DESC
+    LIMIT 10
+    `;
+
+    return db.query(queryString);
+  }
+  const latestMessaging = getMessaging();
+  latestMessaging
+    .then((response) => {
+      let messages = response.rows;
+      let templateVars = {messages};
+      console.log(templateVars);
+      res.render("car_new", templateVars)
+    });
+
 });
 
 
@@ -348,6 +423,57 @@ app.post("/sold", (req, res) => {
 // app.get("/register", (req, res) => {
 //   res.render("register")
 // });
+
+app.post("/price", (rec, res) => {
+  //Setting the default values for max and min if not provided
+  let min = 0;
+  let max = 10000000;
+
+  if (rec.body.min_price) {
+    min = (rec.body.min_price * 100);
+  };
+
+  if (rec.body.max_price) {
+    max = (rec.body.max_price * 100);
+  };
+
+
+  const filterByPrice = function (minPrice, maxPrice) {
+    const queryParams = [minPrice, maxPrice];
+    const queryString = `
+    SELECT *
+    FROM cars
+    WHERE car_price >= $1
+    AND car_price <= $2
+    `;
+
+    return db
+      .query(queryString, queryParams)
+  }
+
+
+  const carsInPriceRange = filterByPrice(min, max);
+  carsInPriceRange
+    .then((response) => {
+      let cars = response.rows;
+      let templateVars = {cars};
+      res.render("car_index", templateVars)
+    })
+});
+
+// Created a work around to put a cookie for testing
+app.post("/new/login", (req, res) => {
+  req.session.userID = req.body.id;
+  req.session.admin = true;
+  res.redirect("/new");
+});
+
+app.post("/new/logout", (req, res) => {
+  // set session value to null
+  req.session = null;
+  res.redirect("/new");
+});
+
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

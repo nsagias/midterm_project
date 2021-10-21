@@ -72,7 +72,8 @@ app.get("/", (req, res) => {
 });
 
 app.post('/messages',async(req,res)=>{
-  const{email,emailContent,subject}=req.body;
+  const{email, sender_email, emailContent,subject}=req.body;
+  console.log(req.body);
   console.log(req.body.email)
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
@@ -89,7 +90,7 @@ app.post('/messages',async(req,res)=>{
     from: 'bessie.schiller54@ethereal.email', // sender address
     to: `${email}`, // list of receivers
     subject: `${subject}`, // Subject line
-    text:`${emailContent}`, // plain text body // html body
+    text:`Sender Email: ${sender_email} \nMessage: ${emailContent}`, // plain text body // html body
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -148,7 +149,7 @@ const getAllCars = function(req, resp) {
         // '0': {'thumb':url/}
         result[i] = cars[i]
       }
-      console.log('cars:', result);
+
 
       templateVars = {
         cars: result
@@ -169,7 +170,10 @@ app.get("/cars/:user_id", (req, res) => {
 });
 //function for get the car details by id
 const getCardetailsByid=(id)=>{
-  const sql=`SELECT  descriptions,cover_url FROM cars WHERE id=$1`;
+  const sql=`SELECT cars.id as car_id, title, descriptions, year, make, model, model_colour, cover_url, car_price, users.email as seller_email
+  FROM cars
+  JOIN users ON seller_id = users.id
+  WHERE cars.id=$1`;
   //converts the string to number
   const values=[Number(id)];
   return db.query(sql,values)
@@ -183,7 +187,6 @@ app.get("/show/:car_id", (req, res) => {
   //console.log(carID)
   getCardetailsByid(carID)
   .then((data)=>{
-    console.log(data)
     const templateVars={data}
     res.render("car_show",templateVars)
   })
@@ -231,6 +234,7 @@ app.get("/messages", (req, res) => {
 // favourite feature related route
 app.post("/favourites", (req, res) => {
   const userID = req.session.userID;
+  console.log(req.body.carID);
   const carID = (Number(req.body.carId));
 
   if (!userID) {
@@ -274,7 +278,6 @@ app.get("/new", (req, res) => {
     .then((response) => {
       let messages = response.rows;
       let templateVars = {messages};
-      console.log(templateVars);
       res.render("car_new", templateVars)
     });
 

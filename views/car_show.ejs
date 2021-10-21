@@ -13,9 +13,16 @@
 <div class="jumbotron w-75 text-center">
   <img src="<%=data.cover_url %> " alt="">
 </div>
-<div class="pl-3">
-  <button type="button" class="btn btn-success">Favourite</button>
-</div>
+<form method="POST" action="/favourites" id="add-favourites-form" class="favourites-form">
+  <div class="pl-3">
+    <input type="text" name="carId" id="add-favourites_car_id">
+    <script type="text/javascript"> document.getElementById('add-favourites_car_id').value = "<%= data.car_id %>";</script>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success">FAVOURITE</button>
+  </div>
+</form>
+
 </div>
   <div class="sub-heading text-center">
     <h1>Description</h1>
@@ -32,16 +39,20 @@
     <form action="/messages"method="post">
       <h5>General Enquiry</h5>
       <div class="mb-3">
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name">
+        <input type="text" name="name"class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
       </div>
       <div class="mb-3">
-        <input type="text" name="subject" class="form-control" id="exampleFormControlInput1" placeholder="subject">
+        <input type="text" name="subject" class="form-control" id="exampleFormControlInput2" placeholder="Subject">
       </div>
       <div class="mb-3">
-        <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="email-address">
+        <input type="hidden" name="email" class="form-control" id="exampleFormControlInput3" placeholder="To: email-address">
+        <script type="text/javascript"> document.getElementById('exampleFormControlInput3').value = "<%= data.seller_email %>";</script>
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+        <input type="email" name="sender_email" class="form-control" id="exampleFormControlInput4" placeholder="Your Email Address">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Message:</label>
         <textarea type="text"class="form-control" name="emailContent" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
       <div>

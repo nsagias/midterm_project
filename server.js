@@ -271,14 +271,22 @@ app.post("/login", (req, res) => {
     }
    const bingo = findUserByEmail(emailT);
   //  bingo.then(resp => console.log({user:resp.rows}));
-  bingo.then(resp => console.log(
-         {
-          id:resp.rows[0].id,
-          email:resp.rows[0].email,
-          password:resp.rows[0].password,
-          admin:resp.rows[0].admin
-        }
-        ));
+    bingo.then(resp => {
+          if (resp.rows[0].email === 'aadmin@gmail.com') {
+            console.log('email is set user to true isUser ')
+          }
+          if (resp.rows[0].password === 'password') {
+            console.log('password set user as authetnicated isAuthenticated')
+
+          }
+          if (resp.rows[0].admin === true) {
+            console.log('Admin is true, set user Admin')
+
+          }
+          if (resp.rows[0].id === 7) {
+            console.log('set id as true')
+          }
+    });
   // bingo.then(resp => console.log(
   //   {
   //     id:resp.rows[0].id,

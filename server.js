@@ -269,34 +269,34 @@ app.post("/login", (req, res) => {
   let isAuthenticated = false;
   let isAmdin = false;
   let userID = null;
-   const bingo = findUserByEmail(emailT);
+  const bingo = findUserByEmail(emailT);
     bingo.then(resp => {
-          if (resp.rows[0].email !== emailT) {
-            res.status(400).redirect('/login');
-            return isUser;
-          }
-          isUser = true;
-          console.log('isUser:',isUser);
+      if (resp.rows[0].email !== emailT) {
+        res.status(400).redirect('/login');
+        return isUser;
+      }
+      isUser = true;
+      console.log('isUser:',isUser);
 
-          if (resp.rows[0].password !== passwordT) {
-            res.status(400).redirect('/login');
-            return isAuthenticated;
-          }
-          isAuthenticated = true;
-          console.log('isAuthenticated:', isAuthenticated);
-        
-          if (resp.rows[0].id === 7) {
-            userID = resp.rows[0].id;
-            req.session.userID = userID;
-            console.log('userID:', userID);
-          }
+      if (resp.rows[0].password !== passwordT) {
+        res.status(400).redirect('/login');
+        return isAuthenticated;
+      }
+      isAuthenticated = true;
+      console.log('isAuthenticated:', isAuthenticated);
+    
+      if (resp.rows[0].id === 7) {
+        userID = resp.rows[0].id;
+        req.session.userID = userID;
+        console.log('userID:', userID);
+      }
 
-          if (resp.rows[0].admin === true) {
-            isAmdin = true;
-            req.session.admin = isAmdin ;
-            console.log('isAdmin:', isAmdin);
-          }
-          res.redirect("/cars");
+      if (resp.rows[0].admin === true) {
+        isAmdin = true;
+        req.session.admin = isAmdin ;
+        console.log('isAdmin:', isAmdin);
+      }
+      res.redirect("/cars");
     });
 
     console.log('this is bingo',bingo)

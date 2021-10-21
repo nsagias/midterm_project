@@ -14,9 +14,14 @@
 <body>
   <main style="margin: 1em;">
     <h3>NEW CARS FOR SALES</h3>
-    <form method="GET" action="/ENPOINT/FAVOURITES">
-      <button type="submit" class="btn btn-success">GET MY FAVOURITES</button>
-    </form>
+    <% if(false){ %>
+      <form method="GET" action="/ENPOINT/FAVOURITES">
+        <button type="submit" class="btn btn-success">GET MY FAVOURITES</button>
+      </form>
+    <% } else{ %>  
+    <!-- not button if not logged in -->
+   <% } %>
+   
     <table class="table">
       <thead>
         <tr>

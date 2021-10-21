@@ -278,15 +278,12 @@ app.post("/login", (req, res) => {
   res.redirect("urls");
 });
 
-// LOGIN STRETCH
-// app.get("/login", (req, res) => {
-//   res.render("login")
-// });
+app.get('/login', (req, res) => {
+  // get login page/form
+  const templateVars = { user: null };
+  res.render('login', templateVars);
+});
 
-// REGISTRATION STREACH
-// app.get("/register", (req, res) => {
-//   res.render("register")
-// });
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);

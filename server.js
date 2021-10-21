@@ -7,7 +7,8 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 // PG database client/connection setup
 const { Pool } = require("pg");
 const dbParams = require("./lib/db.js");
@@ -244,6 +245,9 @@ app.post("/sold", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
+  // test data
+  // let email = 'apple@gmail.com';
+  // let password = 'password';
   // check if email or password are empty strings
   // trim password and email
   const emailT = email.trim();
@@ -252,22 +256,26 @@ app.post("/login", (req, res) => {
   if (emailT === '' || passwordT === '') {
     return res.status(400).redirect('/login');
   }
-    // select id, email, password, admin from users where email='apple@gmail.com';
+  console.log(emailT, passwordT)
+    // // select id, email, password, admin from users where email='apple@gmail.com';
     const findUserByEmail = function (emailT) {
       const queryParams = [emailT];
       const queryString = `
       SELECT *
       FROM users
-      WHERE email = emailT
+      WHERE email = $1
       `;
   
       return db.query(queryString, queryParams);
     }
-
+   const bingo = findUserByEmail(emailT);
+   bingo.then(resp => console.log(resp.rows));
+   console.log('this is bingo',bingo)
     // select id, email, password, admin from users where email='apple@gmail.com';
  
   // let isAdmin = false;
-  const isAuthenticated = findUserByEmail(emailT, passwordT);
+  // const isAuthenticated = findUserByEmail(emailT);
+  // console.log('isAuth:',isAuthenticated);
   // if (!isAuthenticated) {
   //   return res.status(403).redirect('/cars');
   // }

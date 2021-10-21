@@ -61,25 +61,25 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.post('/',async(req,res)=>{
-  const{email}=req.body;
+app.post('/messages',async(req,res)=>{
+  const{email,emailContent,subject}=req.body;
   console.log(req.body.email)
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: 'taylor.goyette26@ethereal.email', // generated ethereal user
-      pass: 'xKEGn6XhCcggMjzYjk', // generated ethereal password
+      user: 'bessie.schiller54@ethereal.email', // generated ethereal user
+      pass: 'NtKGqxXMqAPCn4tzQQ', // generated ethereal password
     },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'taylor.goyette26@ethereal.email', // sender address
+    from: 'bessie.schiller54@ethereal.email', // sender address
     to: `${email}`, // list of receivers
-    subject: "Hello ✔", // Subject line
-    text: "Hello world?", // plain text body // html body
+    subject: `${subject}`, // Subject line
+    text:`${emailContent}`, // plain text body // html body
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -87,6 +87,7 @@ app.post('/',async(req,res)=>{
 
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  res.send("email has send")
 })
 
 

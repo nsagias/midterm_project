@@ -29,23 +29,23 @@
   </div>
   <div class="container">
   <div class="jumbotron w-25 bg-secondary">
-    <form action="">
+    <form action="/messages"method="post">
       <h5>General Enquiry</h5>
       <div class="mb-3">
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name">
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name">
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="password">
+        <input type="text" name="subject" class="form-control" id="exampleFormControlInput1" placeholder="subject">
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="email-address">
+        <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="email-address">
       </div>
       <div class="mb-3">
         <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea type="text"class="form-control" name="emailContent" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
       <div>
-        <button type="button" class="btn btn-success">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
       </div>
     </form>
   </div>

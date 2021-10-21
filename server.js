@@ -273,9 +273,11 @@ app.post("/login", (req, res) => {
 
   let isUser = undefined;
   let isAuthenticated = false;
-  let isAmdin = false;
+  let isAdmin = false;
   let userID = null;
+
   const bingo = findUserByEmail(emailT);
+  
   bingo.then(resp => {
     if (resp.rows[0].email !== emailT) {
       res.status(400).redirect('/login');
@@ -291,16 +293,16 @@ app.post("/login", (req, res) => {
     isAuthenticated = true;
     console.log('isAuthenticated:', isAuthenticated);
 
-    if (resp.rows[0].id === 7) {
+    if (resp.rows[0].id) {
       userID = resp.rows[0].id;
       req.session.userID = userID;
       console.log('userID:', userID);
     }
 
     if (resp.rows[0].admin === true) {
-      isAmdin = true;
-      req.session.admin = isAmdin;
-      console.log('isAdmin:', isAmdin);
+      isAdmin = true;
+      req.session.admin = isAdmin;
+      console.log('isAdmin:', isAdmin);
     }
     res.redirect("/cars");
   });

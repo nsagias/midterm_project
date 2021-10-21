@@ -262,19 +262,6 @@ app.post("/login", (req, res) => {
     return res.status(400).redirect('/login');
   }
   // get users from database
-  
-
-    // const filterByPrice = function (minPrice, maxPrice) {
-    //   const queryParams = [minPrice, maxPrice];
-    //   const queryString = `
-    //   SELECT *
-    //   FROM cars
-    //   WHERE car_price >= $1
-    //   AND car_price <= $2
-    //   `;
-  
-    //   return db.query(queryString, queryParams);
-    // }
     const usersDB = users;
     // email='apple@gmail.com'
     // select id, email, password, admin from users where email='apple@gmail.com';
@@ -359,6 +346,9 @@ app.post("/login", (req, res) => {
    
     return res.status(403).redirect('403');
   }
+  // if
+  //   req.session.userID = req.body.id; //This value should look like a number between 1-7
+  //   req.session.admin = true; //This value shoule be t for user 1 and user 7
 
   /**
    * add logic if userid is admin set userID as admin

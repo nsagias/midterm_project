@@ -250,12 +250,8 @@ app.post("/login", (req, res) => {
   const passwordT = password.trim();
 
   if (emailT === '' || passwordT === '') {
-   
     return res.status(400).redirect('/login');
   }
-    // get users from database
-    // const usersDB = users;
-  
     // select id, email, password, admin from users where email='apple@gmail.com';
     const findUserByEmail = function (emailT) {
       const queryParams = [emailT];
@@ -267,11 +263,14 @@ app.post("/login", (req, res) => {
   
       return db.query(queryString, queryParams);
     }
-    
-    // if true => return  user
-    // select id, email, password, admin from users where email='apple@gmail.com';
-    // 1 | apple@gmail.com | password | t
 
+    // select id, email, password, admin from users where email='apple@gmail.com';
+ 
+  // let isAdmin = false;
+  const isAuthenticated = findUserByEmail(emailT, passwordT);
+  // if (!isAuthenticated) {
+  //   return res.status(403).redirect('/cars');
+  // }
   //   for (let user in usersDB) {
   //     if (usersDB[user].email === userEmail) {
   //       return true;
@@ -279,43 +278,24 @@ app.post("/login", (req, res) => {
   //   }
   //   return undefined;
   // };
+  
 
-  const isCurrentUser = findUserByEmail(emailT);
-
-  if (!isCurrentUser) {
-    return res.status(403).redirect('/cars');
-  }
-   // Authenticale user returns user id
-  // const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
-    //   for (let user in usersDB) {
-  //     if (usersDB[user].email === email) {
-  //       let storedPassword = usersDB[user].password;
-  //       if (password === storedPassword) {
-  //         return usersDB[user].id;
-  //       }
-  //     }
+  //  if(isAuthenticated === true && isAdmin === true){
+  //   isAuthenticated
+  //     .then((resp) => {
+  //       req.session.userID = resp.rows.id; // to be set with res 
+  //       req.session.admin = true;
+  //       res.redirect("car_new");
+  //     })
+  //  }
+  //  if(isAuthenticated === true && isAdmin === false){
+  //   isAuthenticated
+  //     .then((resp) => {
+  //       req.session.userID = resp.rows.id; //// to be set with res 
+  //       res.redirect("car_index");
+  //     })
   //   }
-  // };
-  // if (!isAuthenticated) {
-   
-  //  if isAdmin  true
-   //   req.session.userID = req.body.id; //This value should look like a number between 1-7
-   //   req.session.admin = true; //This value shoule be t for user 1 and user 7
-   if(isAuthenticated === true && isAdmin === true){
-    isCurrentUser
-      .then((resp) => {
-        req.session.userID = req.body.id; // to be set with res 
-        req.session.admin = true;
-        res.redirect("car_new");
-      })
-   }
-   if(isAuthenticated === true && isAdmin === false){
-     isCurrentUser
-      .then((resp) => {
-        req.session.userID = req.body.id; //// to be set with res 
-        res.redirect("car_index");
-      })
-    }
+// end of login
 });
 
 

@@ -261,6 +261,7 @@ app.post("/login", (req, res) => {
   const usersDB = users;
 
   const findUserByEmail = (userEmail, usersDB) => {
+    // select * from users where email='userEmail;
    // add db query
 
     for (let user in usersDB) {
@@ -286,12 +287,21 @@ app.post("/login", (req, res) => {
   const authenticateByPassword = (email, password, usersDB) => {
 
     // add db query
+    // admin false
+    // select id, email, password, admin from users where email='apple@gmail.com';
+    // 1 | apple@gmail.com | password | f
 
+    // select id, email, password, admin from users where email='aadmin@gmail.com';
+    //  id |      email       | password | admin 
+    //  ----+------------------+----------+-------
+    //    7 | aadmin@gmail.com | password | t
+    
+    
 
     for (let user in usersDB) {
       if (usersDB[user].email === email) {
         let storedPassword = usersDB[user].password;
-        if (bcrypt.compareSync(password, storedPassword)) {
+        if (password === storedPassword) {
           return usersDB[user].id;
         }
       }
@@ -311,6 +321,10 @@ app.post("/login", (req, res) => {
 
   /**
    * add logic if userid is admin set userID as admin
+   * 
+   *   id |      email       | password | admin 
+    ----+------------------+----------+-------
+       7 | aadmin@gmail.com | password | t
    * **/
 
   // add id to to session for valid user

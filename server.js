@@ -61,19 +61,13 @@ app.use("/api/widgets", widgetsRoutes(db));
 
 app.get("/", (req, res) => {
 
-  res.render("index");
+  // res.render("index");
+  res.redirect("/cars");
 });
 
 
 // get all cars function
 const getAllCars = function(req, resp) {
-  // user id for logged in lookup
-  // const userId = req.session["userID"];
-
-  // if (!userId) {
-    
-    
-  // }
 
   const sql = `
       SELECT *
@@ -233,7 +227,7 @@ app.post("/sold", (req, res) => {
  app.post("/logout", (req, res) => {
   // set session value to null
   req.session = null;
-  res.redirect("/");
+  res.redirect("/login");
 });
 
 

@@ -8,6 +8,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const bodyParser=require('body-parser')
+const cookieSession = require('cookie-session');
 const nodemailer = require('nodemailer');
 
 
@@ -28,7 +29,12 @@ db.connect();
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
-app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['the longer the better', 'two is betther than one'],
+}));
+
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -52,6 +58,7 @@ app.use(express.static("images"));
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const { Template } = require("ejs");
+const { isDate } = require("moment");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -68,7 +75,8 @@ let statusCodeError = {};
 
 app.get("/", (req, res) => {
 
-  res.render("index");
+  // res.render("index");
+  res.redirect("/cars");
 });
 
 app.post('/messages',async(req,res)=>{
@@ -132,6 +140,7 @@ app.post('/adminmessage',async(req,res)=>{
 
 // get all cars function
 const getAllCars = function(req, resp) {
+
   const sql = `
       SELECT *
       FROM cars
@@ -146,10 +155,8 @@ const getAllCars = function(req, resp) {
       cars = [...res.rows];
 
       for(let i = 0; i < cars.length; i++) {
-        // '0': {'thumb':url/}
-        result[i] = cars[i]
+        result[i] = cars[i];
       }
-
 
       templateVars = {
         cars: result
@@ -349,83 +356,99 @@ app.post("/sold", (req, res) => {
     .then(() => res.redirect("/new"));
 });
 
-////////////////////////////////////////////////////////////////
-
-// /***************************************
-//  * Login
-//  * GET /login
-//  * Renders the login form
-//  ***************************************/
-//  app.get('/login', (req, res) => {
-//   // get login page/form
-//   const templateVars = { user: null };
-//   res.render('login', templateVars);
-// });
-
-
-// /***************************************
-//  * Login
-//  * POST /login
-//  * Redirects to GET /urls
-//  ***************************************/
-// app.post("/login", (req, res) => {
-//   const { email, password } = req.body;
-//   // check if email or password are empty strings
-
-//   // trim password and email
-//   // avoid duplicated and getting around check
-//   const emailT = email.trim();
-//   const passwordT = password.trim();
-
-//   if (emailT === '' || passwordT === '') {
-//     statusCodeError = {
-//       '400': 'Missing_Email_Or_Password',
-//       message: 'Please Enter Email Or Password'
-//     };
-//     return res.status(400).redirect('400');
-//   }
-//   // get users from database
-//   const usersDB = users;
+/***************************************
+ * Logout
+ * POST /logout
+ * Clears session values
+ * Redirects to root /GET/
+ ***************************************/
+ app.post("/logout", (req, res) => {
+  // set session value to null
+  req.session = null;
+  res.redirect("/login");
+});
 
 
-//   // check if is a current user
-//   const isCurrentUser = findUserByEmail(emailT, usersDB);
-//   // if no user found send 403 and message too register
-//   if (!isCurrentUser) {
-//     statusCodeError = {
-//       '403': 'Not_User_Found',
-//       message: 'Please Create Account'
-//     };
-//     return res.status(403).redirect('403');
-//   }
 
-//   // Authenticale user returns user id
-//   const isAuthenticated = authenticateByPassword(emailT, passwordT, usersDB);
-//   // if password returns false 403 response
-//   if (!isAuthenticated) {
-//     statusCodeError = {
-//       '403': 'Password_Does_Not_Match',
-//       message: 'Password or login id does not match'
-//     };
-//     return res.status(403).redirect('403');
-//   }
-//   // add id to to session for valid user
-//   const userID = isAuthenticated;
-//   req.session.userID = userID;
+/***************************************
+ * Login
+ * GET /login
+ * Renders the login form
+ ***************************************/
+ app.get('/login', (req, res) => {
+  // get login page/form
+  const templateVars = { user: null };
+  res.render('login', templateVars);
+});
 
-//   // redirect to urls
-//   res.redirect("urls");
-// });
 
-// LOGIN STRETCH
-// app.get("/login", (req, res) => {
-//   res.render("login")
-// });
+/***************************************
+ * Login
+ * POST /login
+ * Redirects to GET /urls
+ ***************************************/
 
-// REGISTRATION STREACH
-// app.get("/register", (req, res) => {
-//   res.render("register")
-// });
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  
+  const emailT = email.trim();
+  const passwordT = password.trim();
+
+  if (emailT === '' || passwordT === '') {
+    return res.status(400).redirect('/login');
+  }
+  console.log(emailT, passwordT);
+  const findUserByEmail = function(emailT) {
+    const queryParams = [emailT];
+    const queryString = `
+      SELECT *
+      FROM users
+      WHERE email = $1
+      `;
+
+    return db.query(queryString, queryParams);
+  }
+
+  let isUser = undefined;
+  let isAuthenticated = false;
+  let isAdmin = false;
+  let userID = null;
+
+  const bingo = findUserByEmail(emailT);
+  
+  bingo.then(resp => {
+    if (resp.rows[0].email !== emailT) {
+      res.status(400).redirect('/login');
+      return isUser;
+    }
+    isUser = true;
+    console.log('isUser:', isUser);
+
+    if (resp.rows[0].password !== passwordT) {
+      res.status(400).redirect('/login');
+      return isAuthenticated;
+    }
+    isAuthenticated = true;
+    console.log('isAuthenticated:', isAuthenticated);
+
+    if (resp.rows[0].id) {
+      userID = resp.rows[0].id;
+      req.session.userID = userID;
+      console.log('userID:', userID);
+    }
+
+    if (resp.rows[0].admin === true) {
+      isAdmin = true;
+      req.session.admin = isAdmin;
+      console.log('isAdmin:', isAdmin);
+    }
+    res.redirect("/cars");
+  });
+
+    console.log('this is bingo',bingo)
+
+});
+
 
 app.post("/price", (rec, res) => {
   //Setting the default values for max and min if not provided

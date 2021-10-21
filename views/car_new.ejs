@@ -95,6 +95,23 @@
       <button type="submit" class="btn btn-warning">Filter Results</button>
     </div>
   </form>
+
+  <form method="post" action="/new/login" id="workaround-login-form" class="login-form">
+    <div class="form-group">
+      <label for="workaround-login_user_number">Choose User ID</lable>
+      <input type="number" name="id" placeholder="User ID" id="workaround-login_user_number">
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Login!</button>
+    </div>
+  </form>
+
+  <form method="post" action="/new/logout" id="workaround-logout-form" class="logout-form">
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Logout!</button>
+    </div>
+  </form>
+
 </div>
 
 </div>

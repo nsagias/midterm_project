@@ -121,7 +121,7 @@ app.get("/show/:car_id", (req, res) => {
   })
 });
 
-// favourite feature related route
+// favourite feature related route (filters the index view by favourite)
 app.get("/favourites", (req, res) => {
 
 });
@@ -326,8 +326,19 @@ app.post("/price", (rec, res) => {
       let templateVars = {cars};
       res.render("car_index", templateVars)
     })
-})
+});
 
+// Created a work around to put a cookie for testing
+app.post("/new/login", (req, res) => {
+  req.session.userID = 3;
+  req.session.admin = true;
+});
+
+app.post("/new/logout", (req, res) => {
+  // set session value to null
+  req.session = null;
+  res.redirect("/new");
+});
 
 
 app.listen(PORT, () => {

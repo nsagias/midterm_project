@@ -77,7 +77,7 @@ const getAllCars = function(req, resp) {
         // '0': {'thumb':url/}
         result[i] = cars[i]
       }
-      console.log('cars:', result);
+      // console.log('cars:', result);
 
       templateVars = {
         cars: result
@@ -210,7 +210,7 @@ app.post("/sold", (req, res) => {
     .then(() => res.render("car_new"));
 });
 
-////////////////////////////////////////////////////////////////
+
 
 /***************************************
  * Login
@@ -275,13 +275,7 @@ app.post("/login", (req, res) => {
   req.session.userID = userID;
 
   // redirect to urls
-  res.redirect("urls");
-});
-
-app.get('/login', (req, res) => {
-  // get login page/form
-  const templateVars = { user: null };
-  res.render('login', templateVars);
+  res.redirect("car_index");
 });
 
 

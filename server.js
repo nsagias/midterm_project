@@ -280,12 +280,14 @@ app.post("/login", (req, res) => {
   //  bingo.then(resp => console.log({user:resp.rows}));
     bingo.then(resp => {
           if (resp.rows[0].email !== emailT) {
+            res.status(400).redirect('/login');
             return isUser;
           }
           isUser = true;
           console.log('isUser:',isUser);
 
           if (resp.rows[0].password !== passwordT) {
+            res.status(400).redirect('/login');
             return isAuthenticated;
           }
           isAuthenticated = true;
@@ -302,12 +304,11 @@ app.post("/login", (req, res) => {
             req.session.admin = isAmdin ;
             console.log('isAdmin:', isAmdin);
           }
+          res.redirect("/cars");
     });
 
     console.log('this is bingo',bingo)
 
-
-// end of login
 });
 
 

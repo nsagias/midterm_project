@@ -45,7 +45,7 @@ app.use(
 );
 
 app.use(express.static("public"));
-app.use(express.static("images"));
+
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -59,12 +59,6 @@ const { isDate } = require("moment");
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
-
-// Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
-
-let statusCodeError = {};
 
 
 app.get("/", (req, res) => {

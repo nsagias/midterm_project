@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-success">
+  <nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a class="navbar-brand" href="/">THE CAR BUY PLACE</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,7 @@
       <form class="form-inline float-right" action="/logout" method="POST">
         <div class="form-group mb-2">
           <h4 style="margin: 1em">Logged In As Admin </h4>
-          <button type="submit" class="btn btn-outline-dark">Logout</button>
+          <button type="submit" class="btn btn-outline-light">Logout</button>
         </div>
       </form>
 
@@ -24,7 +24,7 @@
       <form class="form-inline float-right" action="/logout" method="POST">
         <div class="form-group mb-2">
           <h4 style="margin: 1em">Logged In As user.email  </h4>
-          <button type="submit" class="btn btn-outline-dark">Logout</button>
+          <button type="submit" class="btn btn-outline-light">Logout</button>
         </div>
       </form>
 
@@ -32,12 +32,12 @@
       <% } else { %> 
         <form class="form-inline float-right" action="/login" method="GET">
           <div class="form-group mb-2">
-            <button type="submit" class="btn btn-outline-dark">Login</button>
+            <button type="submit" class="btn btn-outline-light">Login</button>
           </div>
         </form>
         <form class="form-inline float-right" action="/register" method="GET">
           <div class="form-group mb-2">
-            <button type="submit" class="btn btn-outline-dark">Register</button>
+            <button type="submit" class="btn btn-outline-light">Register</button>
           </div>
         </form>
     <% } %>

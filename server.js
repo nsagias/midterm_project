@@ -7,7 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const bodyParser=require('body-parser');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const nodemailer = require('nodemailer');
@@ -40,7 +40,7 @@ app.use(
   sassMiddleware({
     source: __dirname + "/styles",
     destination: __dirname + "/public/styles",
-    isSass: false, 
+    isSass: false,
   })
 );
 
@@ -57,7 +57,7 @@ app.get("/", (req, res) => {
  * Login
  * GET /login
  ***************************************/
- app.get('/stats', (req, res) => {
+app.get('/stats', (req, res) => {
   // get login page/form
   const templateVars = { user: null };
   res.render('car_stats', templateVars);
@@ -69,9 +69,9 @@ app.get("/", (req, res) => {
  * Email messages show pages
  * POST /messages
  ***************************************/
-app.post('/messages',async(req,res)=>{
+app.post('/messages', async(req, res) => {
   const user_id = req.session.userID;
-  const{car_id, email, sender_email, emailContent,subject}=req.body;
+  const { car_id, email, sender_email, emailContent, subject } = req.body;
   const car_id_num = Number(car_id)
   console.log(car_id_num);
   // if user is not logged in, redirect to the login route
@@ -79,9 +79,9 @@ app.post('/messages',async(req,res)=>{
     res.redirect("/login");
   }
   // adding a record of the message event to the messages db if it is sent by a user. 
-    const addMessageRecord = function(car_id, user_id, seller_email, buyer_email) {
-      const queryParams = [car_id, user_id, seller_email, buyer_email];
-      const queryString = `
+  const addMessageRecord = function (car_id, user_id, seller_email, buyer_email) {
+    const queryParams = [car_id, user_id, seller_email, buyer_email];
+    const queryString = `
       INSERT INTO messages (car_id, buyer_id, email_id_receiver, email_id_sender, seller_id)
       VALUES ($1, $2, $3, $4, (
         SELECT seller_id
@@ -90,9 +90,9 @@ app.post('/messages',async(req,res)=>{
         ))
       `;
 
-      return db.query(queryString, queryParams);
-    }
-    addMessageRecord(car_id_num, user_id, email, sender_email).then((res) => console.log(res));
+    return db.query(queryString, queryParams);
+  }
+  addMessageRecord(car_id_num, user_id, email, sender_email).then((res) => console.log(res));
   //}
 
   let transporter = nodemailer.createTransport({
@@ -100,19 +100,19 @@ app.post('/messages',async(req,res)=>{
     port: 587,
     secure: false,
     auth: {
-      user: 'bessie.schiller54@ethereal.email', 
-      pass: 'NtKGqxXMqAPCn4tzQQ', 
+      user: 'bessie.schiller54@ethereal.email',
+      pass: 'NtKGqxXMqAPCn4tzQQ',
     },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'bessie.schiller54@ethereal.email', 
-    to: `${email}`, 
-    subject: `${subject}`, 
-    text:`Sender Email: ${sender_email} \nMessage: ${emailContent}`, 
+    from: 'bessie.schiller54@ethereal.email',
+    to: `${email}`,
+    subject: `${subject}`,
+    text: `Sender Email: ${sender_email} \nMessage: ${emailContent}`,
   });
-  
+
   // do NOT delete
   // console.log("Message sent: %s", info.messageId);
   // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
@@ -125,29 +125,29 @@ app.post('/messages',async(req,res)=>{
  *       admin page/car_new
  * POST /adminmessage
  ***************************************/
-app.post('/adminmessage',async(req,res)=>{
-  const{email,emailContent,subject}=req.body;
+app.post('/adminmessage', async(req, res) => {
+  const { email, emailContent, subject } = req.body;
 
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
-    secure: false, 
+    secure: false,
     auth: {
-      user: 'bessie.schiller54@ethereal.email', 
-      pass: 'NtKGqxXMqAPCn4tzQQ', 
+      user: 'bessie.schiller54@ethereal.email',
+      pass: 'NtKGqxXMqAPCn4tzQQ',
     },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'bessie.schiller54@ethereal.email', 
-    to: `${email}`, 
-    subject: `${subject}`, 
-    text:`${emailContent}`, 
+    from: 'bessie.schiller54@ethereal.email',
+    to: `${email}`,
+    subject: `${subject}`,
+    text: `${emailContent}`,
   });
 
   console.log("Message sent: %s", info.messageId);
-  
+
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   res.redirect("/new");
 });
@@ -166,22 +166,22 @@ const getAllCars = function(req, resp) {
       WHERE delete_date is NULL
       `;
   db.query(sql, (error, res) => {
-      let templateVars = {};
-      if (error) {
-          throw error;
-      }
-      let result = {};
-      cars = [...res.rows];
+    let templateVars = {};
+    if (error) {
+      throw error;
+    }
+    let result = {};
+    cars = [...res.rows];
 
-      for(let i = 0; i < cars.length; i++) {
-        result[i] = cars[i];
-      }
+    for (let i = 0; i < cars.length; i++) {
+      result[i] = cars[i];
+    }
 
-      templateVars = {
-        cars: result
-      };
+    templateVars = {
+      cars: result
+    };
 
-      resp.render("car_index", {templateVars});
+    resp.render("car_index", { templateVars });
   })
 };
 
@@ -198,26 +198,26 @@ app.get("/cars/:user_id", (req, res) => {
   res.render("car_index");
 });
 //function for get the car details by id
-const getCardetailsByid=(id)=>{
-  const sql=`SELECT cars.id as car_id, title, descriptions, year, make, model, model_colour, cover_url, car_price, users.email as seller_email
+const getCardetailsByid = (id) => {
+  const sql = `SELECT cars.id as car_id, title, descriptions, year, make, model, model_colour, cover_url, car_price, users.email as seller_email
   FROM cars
   JOIN users ON seller_id = users.id
   WHERE cars.id=$1`;
   //converts the string to number
-  const values=[Number(id)];
-  return db.query(sql,values)
-  .then((res)=>{
-   return res.rows[0];
-  })
-  .catch(err=>err);
+  const values = [Number(id)];
+  return db.query(sql, values)
+    .then((res) => {
+      return res.rows[0];
+    })
+    .catch(err => err);
 }
 app.get("/show/:car_id", (req, res) => {
-  const carID=req.params.car_id;
+  const carID = req.params.car_id;
   getCardetailsByid(carID)
-  .then((data)=>{
-    const templateVars={data};
-    res.render("car_show",templateVars);
-  })
+    .then((data) => {
+      const templateVars = { data };
+      res.render("car_show", templateVars);
+    })
 });
 
 
@@ -229,9 +229,9 @@ app.get("/favourites", (req, res) => {
   if (!userID) {
     return res.redirect("/login");
   }
-  
+
   // get favourite and sort descending
-  const filterByFavourites = function (buyer_id) {
+  const filterByFavourites = function(buyer_id) {
     const queryParams = [buyer_id];
     const queryString = `
     SELECT cars.id as id, seller_id, title, descriptions, year, make model, model_colour, thumbnail_url, cover_url, car_price, sold, delete_date
@@ -248,7 +248,7 @@ app.get("/favourites", (req, res) => {
   carsInFavourites
     .then((response) => {
       let cars = response.rows;
-      let templateVars = {cars};
+      let templateVars = { cars };
       res.render("car_index", templateVars);
     })
 
@@ -266,7 +266,7 @@ app.post("/favourites", (req, res) => {
   }
 
   // add to favourites
-  const addToFavourites = function (user, car) {
+  const addToFavourites = function(user, car) {
     const queryParams = [user, car];
     const queryString = `
     INSERT INTO favourites (buyer_id, car_id)
@@ -302,7 +302,7 @@ app.get("/new", (req, res) => {
   latestMessaging
     .then((response) => {
       let messages = response.rows;
-      let templateVars = {messages};
+      let templateVars = { messages };
       res.render("car_new", templateVars);
     });
 
@@ -311,8 +311,8 @@ app.get("/new", (req, res) => {
 
 // Recieve new car form submission and send to db
 app.post("/new", (req, res) => {
-  
-  const addCar = function (car) {
+
+  const addCar = function(car) {
     const queryParams = [car.seller_id, car.title, car.descriptions, car.year, car.make, car.model, car.model_colour, car.thumbnail_url, car.cover_url, car.car_price * 100];
     const queryString = `
     INSERT INTO cars (seller_id, title, descriptions, year, make, model, model_colour, thumbnail_url, cover_url, car_price)
@@ -360,7 +360,7 @@ app.post("/sold", (req, res) => {
   if (!req.body.id) {
     return res.redirect("/new");
   }
-  const markSold = function (id) {
+  const markSold = function(id) {
     const queryParams = [id];
     const queryString = `
     UPDATE cars
@@ -381,7 +381,7 @@ app.post("/sold", (req, res) => {
  * Logout
  * POST /logout
  ***************************************/
- app.post("/logout", (req, res) => {
+app.post("/logout", (req, res) => {
   // set session value to null
   req.session = null;
   res.redirect("/login");
@@ -393,7 +393,7 @@ app.post("/sold", (req, res) => {
  * Login
  * GET /login
  ***************************************/
- app.get('/login', (req, res) => {
+app.get('/login', (req, res) => {
   // get login page/form
   const templateVars = { user: null };
   res.render('login', templateVars);
@@ -415,7 +415,7 @@ app.post("/login", (req, res) => {
     return res.status(400).redirect('/login');
   }
   console.log(emailT, passwordT);
-  const findUserByEmail = function(emailT) {
+  const findUserByEmail = function (emailT) {
     const queryParams = [emailT];
     const queryString = `
       SELECT *
@@ -445,7 +445,7 @@ app.post("/login", (req, res) => {
       return isAuthenticated;
     }
     isAuthenticated = true;
-    
+
     if (resp.rows[0].id) {
       userID = resp.rows[0].id;
       req.session.userID = userID;
@@ -457,9 +457,9 @@ app.post("/login", (req, res) => {
     }
     res.redirect("/cars");
   })
-  .catch((resp) => console.log(resp));
-    // do not remove this console.log
-    console.log('this is user',getUser);
+    .catch((resp) => console.log(resp));
+  // do not remove this console.log
+  console.log('this is user', getUser);
 
 });
 
@@ -484,7 +484,7 @@ app.post("/price", (rec, res) => {
   };
 
 
-  const filterByPrice = function (minPrice, maxPrice) {
+  const filterByPrice = function(minPrice, maxPrice) {
     const queryParams = [minPrice, maxPrice];
     const queryString = `
     SELECT *
@@ -496,20 +496,20 @@ app.post("/price", (rec, res) => {
     return db.query(queryString, queryParams);
   }
 
- // call function and re-render car_index with cars showing min and max
+  // call function and re-render car_index with cars showing min and max
   const carsInPriceRange = filterByPrice(min, max);
   carsInPriceRange
     .then((response) => {
       let cars = response.rows;
-      let templateVars = {cars};
+      let templateVars = { cars };
       res.render("car_index", templateVars);
     });
 });
 
 // Created a work around to put a cookie for testing
 app.post("/new/login", (req, res) => {
-  req.session.userID = req.body.id; 
-  req.session.admin = true; 
+  req.session.userID = req.body.id;
+  req.session.admin = true;
   res.redirect("/new");
 });
 

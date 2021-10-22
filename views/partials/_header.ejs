@@ -20,7 +20,7 @@
       </form>
 
      <!-- user -->
-      <% } else if (true){ %> 
+      <% } else if (true){ %>
       <form class="form-inline float-right" action="/logout" method="POST">
         <div class="form-group mb-2">
           <h4 style="margin: 1em"></h4>
@@ -28,8 +28,15 @@
         </div>
       </form>
 
+      <form class="form-inline float-right" action="/new" method="GET">
+        <div class="form-group mb-2">
+          <h4 style="margin: 1em"></h4>
+          <button type="submit" class="btn btn-outline-light">Admin</button>
+        </div>
+      </form>
+
       <!-- not logged in -->
-      <% } else { %> 
+      <% } else { %>
         <form class="form-inline float-right" action="/login" method="GET">
           <div class="form-group mb-2">
             <button type="submit" class="btn btn-outline-light">Login</button>

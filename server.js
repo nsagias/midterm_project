@@ -77,7 +77,6 @@ app.get("/", (req, res) => {
 /***************************************
  * Login
  * GET /login
- * Renders the login form
  ***************************************/
  app.get('/stats', (req, res) => {
   // get login page/form
@@ -86,6 +85,11 @@ app.get("/", (req, res) => {
 });
 
 
+
+/***************************************
+ * Email messages show pages
+ * POST /messages
+ ***************************************/
 app.post('/messages',async(req,res)=>{
   const user_id = req.session.userID;
   const{car_id, email, sender_email, emailContent,subject}=req.body;
@@ -140,6 +144,12 @@ app.post('/messages',async(req,res)=>{
   res.redirect("/cars");
 });
 
+
+/***************************************
+ * Email messages show pages for 
+ *       admin page/car_new
+ * POST /adminmessage 
+ ***************************************/
 app.post('/adminmessage',async(req,res)=>{
   const{email,emailContent,subject}=req.body;
 
@@ -169,7 +179,12 @@ app.post('/adminmessage',async(req,res)=>{
   res.redirect("/new")
 });
 
-// get all cars function
+
+
+/***************************************
+ * Get All cars function for 
+ * cars_index
+ ***************************************/
 const getAllCars = function(req, resp) {
 
   const sql = `
@@ -193,12 +208,15 @@ const getAllCars = function(req, resp) {
         cars: result
       };
 
-      //console.log(templateVars);
       resp.render("car_index", {templateVars})
   })
 };
 
-
+/***************************************
+ * Email messages show pages for 
+ *       admin page/car_new
+ * GET/cars for car_index
+ ***************************************/
 app.get("/cars", getAllCars);
 
 
@@ -262,16 +280,6 @@ app.get("/favourites", (req, res) => {
 
 });
 
-
-// messages feature related route
-app.post("/messages", (req, res) => {
-
-});
-
-// messages feature related route
-app.get("/messages", (req, res) => {
-
-});
 
 // favourite feature related route add to favourite
 app.post("/favourites", (req, res) => {

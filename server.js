@@ -73,6 +73,19 @@ app.get("/", (req, res) => {
   res.redirect("/cars");
 });
 
+
+/***************************************
+ * Login
+ * GET /login
+ * Renders the login form
+ ***************************************/
+ app.get('/stats', (req, res) => {
+  // get login page/form
+  const templateVars = { user: null };
+  res.render('car_stats', templateVars);
+});
+
+
 app.post('/messages',async(req,res)=>{
   const user_id = req.session.userID;
   const{car_id, email, sender_email, emailContent,subject}=req.body;

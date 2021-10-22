@@ -3,6 +3,10 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
   <title>THE CAR BUY PLACE</title>
 </head>
 <header>
@@ -10,7 +14,7 @@
 </header>
 <body style="background-color:rgb(233,236,239)">
   <div class="sub-heading text-center">
-    <h3>CAR SALES AT THE CAR BUY PLACE</h3>
+    <h3>% CAR SALES BY MONTH</h3>
   </div>
 <!-- Styles -->
 <style>
@@ -21,10 +25,7 @@
   
   </style>
   
-  <!-- Resources -->
-  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+  
   
   <!-- Chart code -->
   <script>
@@ -37,30 +38,30 @@
   // Create chart instance
   let chart = am4core.create("chartdiv", am4charts.XYChart);
   
-  // Add data from pg
+  // Add data from sql here
   chart.data = [{
-    "year": "2018",
+    "month": "July",
     "toyota": 30,
     "honda": 25,
     "nissan": 15,
     "tesla": 5,
-    "ford-trucks": 11
+    "ford": 11
   
   }, {
-    "year": "2019",
+    "month": "Aug",
     "toyota": 33,
     "honda": 25,
     "nissan": 15,
     "tesla": 5,
-    "ford-trucks": 11,
+    "ford": 11,
 
   }, {
-    "year": "2020",
+    "month": "Sep",
     "toyota": 35,
     "honda": 20,
     "nissan": 13,
     "tesla": 15,
-    "ford-trucks": 14,
+    "ford": 14,
  
   }];
   
@@ -69,7 +70,7 @@
   
   // Create axes
   let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-  categoryAxis.dataFields.category = "year";
+  categoryAxis.dataFields.category = "month";
   categoryAxis.renderer.grid.template.opacity = 0;
   
   let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
@@ -86,7 +87,7 @@
   function createSeries(field, name) {
     let series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueX = field;
-    series.dataFields.categoryY = "year";
+    series.dataFields.categoryY = "month";
     series.stacked = true;
     series.name = name;
     
@@ -101,7 +102,8 @@
   createSeries("honda", "Honda");
   createSeries("nissan", "Nissan");
   createSeries("tesla", "Tesla");
-  createSeries("ford-trucks", "Ford-Trucks");
+  createSeries("ford", "Ford");
+ 
 
   
   }); // end am4core.ready()

@@ -254,8 +254,7 @@ app.get("/favourites", (req, res) => {
     ORDER BY favourite_date DESC
     `;
 
-    return db
-      .query(queryString, queryParams)
+    return db.query(queryString, queryParams)
   }
 
   const carsInFavourites = filterByFavourites(userID);
@@ -287,8 +286,7 @@ app.post("/favourites", (req, res) => {
     RETURNING *
     `;
 
-    return db
-      .query(queryString, queryParams)
+    return db.query(queryString, queryParams)
   }
 
   const newFavourite = addToFavourites(userID, carID);
@@ -333,8 +331,7 @@ app.post("/new", (req, res) => {
     RETURNING *;
     `;
 
-    return db
-      .query(queryString, queryParams);
+    return db.query(queryString, queryParams);
 
   };
 
@@ -360,8 +357,7 @@ app.post("/delete", (req, res) => {
     WHERE id = $1
     ;`;
 
-    return db
-      .query(queryString, queryParams)
+    return db.query(queryString, queryParams)
   }
 
 
@@ -384,13 +380,11 @@ app.post("/sold", (req, res) => {
     WHERE id = $1
     ;`;
 
-    return db
-      .query(queryString, queryParams)
+    return db.query(queryString, queryParams)
   }
 
   const sold = markSold(req.body.id);
-  sold
-    .then(() => res.redirect("/new"));
+  sold.then(() => res.redirect("/new"));
 });
 
 
@@ -507,8 +501,7 @@ app.post("/price", (rec, res) => {
     AND car_price <= $2
     `;
 
-    return db
-      .query(queryString, queryParams)
+    return db.query(queryString, queryParams)
   }
 
 

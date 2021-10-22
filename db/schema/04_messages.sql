@@ -1,10 +1,10 @@
--- Drop and recreate messages table 
+-- Drop and recreate messages table
 
 DROP TABLE IF EXISTS messages  CASCADE;
 
 CREATE TABLE messages (
   id SERIAL PRIMARY KEY NOT NULL,
-  sent_date DATE NOT NULL DEFAULT CURRENT_DATE,
+  sent_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
   email_id_sender    VARCHAR(255) NOT NULL,
   email_id_receiver  VARCHAR(255) NOT NULL,
   seller_id INTEGER,

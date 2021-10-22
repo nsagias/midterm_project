@@ -228,7 +228,8 @@ app.get("/favourites", (req, res) => {
   if (!userID) {
     return res.redirect("/login");
   }
-
+  
+  // get favourite and sort descending
   const filterByFavourites = function (buyer_id) {
     const queryParams = [buyer_id];
     const queryString = `
@@ -241,7 +242,7 @@ app.get("/favourites", (req, res) => {
 
     return db.query(queryString, queryParams)
   }
-
+  // call favourites and  assign to template var
   const carsInFavourites = filterByFavourites(userID);
   carsInFavourites
     .then((response) => {
@@ -263,6 +264,7 @@ app.post("/favourites", (req, res) => {
     return res.redirect("/login");
   }
 
+  // add to favourites
   const addToFavourites = function (user, car) {
     const queryParams = [user, car];
     const queryString = `
@@ -294,6 +296,7 @@ app.get("/new", (req, res) => {
 
     return db.query(queryString);
   }
+  // call messaging and assign data to templateVars
   const latestMessaging = getMessaging();
   latestMessaging
     .then((response) => {
@@ -428,9 +431,9 @@ app.post("/login", (req, res) => {
   let isAdmin = false;
   let userID = null;
 
-  const bingo = findUserByEmail(emailT);
+  const getUser = findUserByEmail(emailT);
 
-  bingo.then(resp => {
+  getUser.then(resp => {
     if (resp.rows[0].email !== emailT) {
       res.redirect('/login');
       return isUser;
@@ -458,11 +461,17 @@ app.post("/login", (req, res) => {
   })
   .catch((resp) => console.log(resp));
     // do not remove this console.log
-    console.log('this is bingo',bingo);
+    console.log('this is user',getUser);
 
 });
 
 
+
+/***************************************
+ * Login
+ * POST /price
+ * Enpoint to get/filter price by min max
+ ***************************************/
 app.post("/price", (rec, res) => {
   //Setting the default values for max and min if not provided
   let min = 0;
@@ -489,7 +498,7 @@ app.post("/price", (rec, res) => {
     return db.query(queryString, queryParams)
   }
 
-
+ // call function and re-render car_index with cars showing min and max
   const carsInPriceRange = filterByPrice(min, max);
   carsInPriceRange
     .then((response) => {

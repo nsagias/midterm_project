@@ -3,6 +3,10 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+
   <title>The Car Buy Place</title>
 </head>
 <header>
@@ -10,165 +14,92 @@
 </header>
 
 <body>
-  <div class="container d-flex justify-content-center">
-  <h1>Add a new car</h1>
-
-  <div>
-  <form method="POST" action="/new" id="new-car-form" class="new-car-form">
-    <div class="form-group">
+   <!-- new car -->
+   <div class="text-center">
+    <h1>ADD A NEW CAR</h1>
+  </div>
+  <div class="container">
+  <form method="POST" action="/new" id="new-car-form" class="form-row pl-4 border broder-dark">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_title">Title</lable>
       <input type="text" name="title" placeholder="Title" id="new-car-form_title">
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_seller_id">Seller ID</lable>
       <input type="number" name="seller_id" placeholder="Seller ID" id="new-car-form_seller_id">
     </div>
-    <div class="form-goup">
+    <div class="form-goup pl-3 mt-3">
       <label for="new-car-form_Descriptions">Description</label>
-      <textarea name="descriptions" id="new-car-form_description" maxlength="255" rows="3"></textarea>
+      <textarea name="descriptions" id="new-car-form_description" rows="3"></textarea>
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_year">Year</lable>
       <input type="number" name="year" placeholder="Year" id="new-car-form_year">
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_make">Make</lable>
       <input type="text" name="make" placeholder="Make" id="new-car-form_make">
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_model">Model</lable>
       <input type="text" name="model" placeholder="Model" id="new-car-form_model">
       </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_model_colour">Colour</lable>
       <input type="text" name="model_colour" placeholder="Colour" id="new-car-form_model_colour">
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_thumbnail_url">Thumbnail Image</lable>
       <input type="text" placeholder="Thumbnail" name="thumbnail_url" id="new-car-form_thumbnail_url">
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_cover_url">Cover Image</lable>
       <input type="text" placeholder="Cover Image" name="cover_url" id="new-car-form_cover_url">
     </div>
-    <div class="form-group">
+    <div class="form-group pl-3 mt-3">
       <label for="new-car-form_car_price">Price</lable>
       <input type="number" placeholder="Price" name="car_price" id="new-car-form_car_price">
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">Add the Car</button>
-    </div>
-  </div>
-  </form>
+    <div class="form-group pl-3 mt-3">
 
-  <form method="post" action="/delete" id="car-delete-form" class="car-delete-form">
-    <div class="form-group">
+    </div>
+  </form>
+  <div class="d-flex justify-content-center mt-2">
+  <button type="submit" class="btn btn-success">ADD THE CAR</button>
+</div>
+</div>
+<br class="border border-dark">
+  <!-- end of new car -->
+
+  <!-- delete form -->
+  <div class="container">
+  <form method="post" action="/delete" id="car-delete-form" class="car-delete-form mt-4 form-row">
+    <div class="form-group d-flex justify-content-center pl-1 mt-3">
       <label for="car-delete-form_id">Car ID to Delete</lable>
       <input type="text" name="id" placeholder="Car ID" id="car-delete-form_id">
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-danger">Delete Record</button>
+    <div class="form-group ml-3 mt-3">
+      <button type="submit" class="btn-md btn-danger">Delete Record</button>
     </div>
   </form>
-
-  <form method="post" action="/sold" id="car-sold-form" class="car-sold-form">
-    <div class="form-group">
+</div>
+  <!-- end of delete form -->
+  <!-- start of sold form -->
+  <div class="container">
+  <form method="post" action="/sold" id="car-sold-form" class="car-sold-form form-row">
+    <div class="form-group d-flex justify-content-center">
       <label for="car-sold-form_id">Sold Car ID</lable>
       <input type="text" name="id" placeholder="Car ID" id="car-sold-form_id">
     </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-warning">Mark Sold</button>
+    <div class="form-group pl-3">
+      <button type="submit" class="btn-md btn-warning">Mark Sold</button>
     </div>
   </form>
-
-
-  <form method="post" action="/price" id="filter-form" class="filter-form">
-    <div class="form-group">
-      <label for="filter_min_price">min price</lable>
-      <input type="number" name="min_price" placeholder="min Price" >
-    </div>
-    <div class="form-group">
-      <label for="filter_max_price">max price</lable>
-      <input type="number" name="max_price" placeholder="Max Price" >
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">FILTER BY PRICE</button>
-    </div>
-  </form>
-
-  <form method="post" action="/new/login" id="workaround-login-form" class="login-form">
-    <div class="form-group">
-      <label for="workaround-login_user_number">Choose User ID</lable>
-      <input type="number" name="id" placeholder="User ID" id="workaround-login_user_number">
-    </div>
-    <div class="form-group">
-      <label for="workaround-login_admin">Admin?</lable>
-      <input type="number" name="admin" placeholder="true or false" id="workaround-login_user_number">
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">Login!</button>
-    </div>
-  </form>
-
-  <form method="post" action="/new/logout" id="workaround-logout-form" class="logout-form">
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">Logout!</button>
-    </div>
-  </form>
-
-  <form method="POST" action="/favourites" id="workaround-favourites-form" class="favourites-form">
-    <div class="form-group">
-      <input type="hidden" name="carId" id="workaround-favourites_car_id">
-      <script type="text/javascript"> document.getElementById('workaround-favourites_car_id').value = "3";</script>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">ADD FAVOURITE</button>
-    </div>
-  </form>
-
-  <form method="GET" action="/favourites" id="workaround-favourites-form" class="favourites-form">
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">GET FAVOURITES</button>
-    </div>
-  </form>
-
-  <div>
-    <form method="GET" action="/new">
-      <button type="submit" class="btn btn-success">GET MESSAGES</button>
-    </form>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">CAR ID</th>
-          <th scope="col">SELLER ID</th>
-          <th scope="col">SELLER EMAIL</th>
-          <th scope="col">BUYER ID</th>
-          <th scope="col">BUYER EMAIL</th>
-          <th scope="col">DATE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% for(let message in messages) { %>
-          <tr>
-
-            <td><a href="/show/<%= messages[message].id %>"> <%= messages[message].car_id %></a></td>
-            <td><%= messages[message].seller_id %></td>
-            <td><%= messages[message].email_id_receiver %></td>
-            <td><%= messages[message].buyer_id %></td>
-            <td><%= messages[message].email_id_sender %></td>
-            <td><%= messages[message].sent_date %></td>
-
-          </tr>
-          <% } %>
-      </tbody>
-    </table>
   </div>
+ <!-- end of car-sold-form -->
 
-</div>
-
-</div>
-
-<div class="container">
+<!-- start of email -->
+<div class="container mt-5">
 <div class="jumbotron w-25 bg-secondary">
   <form action="/messages"method="post">
     <h5>General Enquiry</h5>
@@ -193,6 +124,40 @@
     </div>
   </form>
 </div>
+<!-- end of email -->
+<!-- get message button -->
+<div class="messages">
+  <form method="GET" action="/new" >
+    <button type="submit" class="btn btn-success">GET MESSAGES</button>
+  </form>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">CAR ID</th>
+        <th scope="col">SELLER ID</th>
+        <th scope="col">SELLER EMAIL</th>
+        <th scope="col">BUYER ID</th>
+        <th scope="col">BUYER EMAIL</th>
+        <th scope="col">DATE</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let message in messages) { %>
+        <tr>
+
+          <td><a href="/show/<%= messages[message].id %>"> <%= messages[message].car_id %></a></td>
+          <td><%= messages[message].seller_id %></td>
+          <td><%= messages[message].email_id_receiver %></td>
+          <td><%= messages[message].buyer_id %></td>
+          <td><%= messages[message].email_id_sender %></td>
+          <td><%= messages[message].sent_date %></td>
+
+        </tr>
+        <% } %>
+    </tbody>
+  </table>
+</div>
+<!-- end of message button -->
 
 
 

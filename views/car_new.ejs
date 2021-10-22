@@ -95,56 +95,7 @@
     </div>
   </form>
 
-
-  <form method="post" action="/price" id="filter-form" class="filter-form">
-    <div class="form-group">
-      <label for="filter_min_price">min price</lable>
-      <input type="number" name="min_price" placeholder="min Price" >
-    </div>
-    <div class="form-group">
-      <label for="filter_max_price">max price</lable>
-      <input type="number" name="max_price" placeholder="Max Price" >
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-info">FILTER BY PRICE</button>
-    </div>
-  </form>
-
-  <form method="post" action="/new/login" id="workaround-login-form" class="login-form">
-    <div class="form-group">
-      <label for="workaround-login_user_number">Choose User ID</lable>
-      <input type="number" name="id" placeholder="User ID" id="workaround-login_user_number">
-    </div>
-    <div class="form-group">
-      <label for="workaround-login_admin">Admin?</lable>
-      <input type="number" name="admin" placeholder="true or false" id="workaround-login_user_number">
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-info">Login!</button>
-    </div>
-  </form>
-
-  <form method="post" action="/new/logout" id="workaround-logout-form" class="logout-form">
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">Logout!</button>
-    </div>
-  </form>
-
-  <form method="POST" action="/favourites" id="workaround-favourites-form" class="favourites-form">
-    <div class="form-group">
-      <input type="hidden" name="carId" id="workaround-favourites_car_id">
-      <script type="text/javascript"> document.getElementById('workaround-favourites_car_id').value = "3";</script>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">ADD FAVOURITE</button>
-    </div>
-  </form>
-
-  <form method="GET" action="/favourites" id="workaround-favourites-form" class="favourites-form">
-    <div class="form-group">
-      <button type="submit" class="btn btn-success">GET FAVOURITES</button>
-    </div>
-  </form>
+</form>
 
   <div>
     <form method="GET" action="/new">
@@ -186,7 +137,7 @@
 <!-- start of email -->
 <div class="container mt-5">
 <div class="jumbotron w-25 bg-secondary">
-  <form action="/messages"method="post">
+  <form action="/adminmessage"method="post">
     <h5 style="color:white">General Enquiry</h5>
     <div class="mb-3">
       <input type="text" name="name"class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
@@ -210,39 +161,7 @@
   </form>
 </div>
 <!-- end of email -->
-<!-- get message button -->
-<div class="messages">
-  <form method="GET" action="/new" >
-    <button type="submit" class="btn btn-success">GET MESSAGES</button>
-  </form>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">CAR ID</th>
-        <th scope="col">SELLER ID</th>
-        <th scope="col">SELLER EMAIL</th>
-        <th scope="col">BUYER ID</th>
-        <th scope="col">BUYER EMAIL</th>
-        <th scope="col">DATE</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(let message in messages) { %>
-        <tr>
 
-          <td><a href="/show/<%= messages[message].id %>"> <%= messages[message].car_id %></a></td>
-          <td><%= messages[message].seller_id %></td>
-          <td><%= messages[message].email_id_receiver %></td>
-          <td><%= messages[message].buyer_id %></td>
-          <td><%= messages[message].email_id_sender %></td>
-          <td><%= messages[message].sent_date %></td>
-
-        </tr>
-        <% } %>
-    </tbody>
-  </table>
-</div>
-<!-- end of message button -->
 
 
 <form method="GET" action="/stats">

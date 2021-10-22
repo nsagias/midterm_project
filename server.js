@@ -94,7 +94,7 @@ app.post('/messages', async(req, res) => {
   };
 
   addMessageRecord(car_id_num, user_id, email, sender_email).then((res) => console.log(res));
-  //}
+
 
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
@@ -147,9 +147,9 @@ app.post('/adminmessage', async(req, res) => {
     text: `${emailContent}`,
   });
 
-  console.log("Message sent: %s", info.messageId);
-
-  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  // do NOT delete code
+  // console.log("Message sent: %s", info.messageId);
+  // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   res.redirect("/new");
 });
 
@@ -284,13 +284,9 @@ app.post("/favourites", (req, res) => {
 
     return db.query(queryString, queryParams);
   };
-
+ //  call funnction, add to favourites in database  redirect to /cars
   const newFavourite = addToFavourites(userID, carID);
-
-  newFavourite
-    .then(() => {
-      res.redirect("/cars");
-    });
+  newFavourite.then(() => {res.redirect("/cars")});
 });
 
 
@@ -339,12 +335,9 @@ app.post("/new", (req, res) => {
     return db.query(queryString, queryParams);
   };
 
+  // call funnction to change status in database  redirect to /new
   const newListing = addCar(req.body);
-
-  newListing
-    .then(() => {
-      res.redirect("/new");
-    });
+  newListing.then(() => {res.redirect("/new")});
 
 });
 
@@ -366,7 +359,7 @@ app.post("/delete", (req, res) => {
     return db.query(queryString, queryParams);
   };
 
-
+  //  call funnction to change status in database  redirect to /new
   const deleted = markDeleted(req.body.id);
   deleted.then(() => res.redirect("/new"));
 
@@ -379,6 +372,7 @@ app.post("/sold", (req, res) => {
   if (!req.body.id) {
     return res.redirect("/new");
   }
+  // query function to change status to sold in database
   const markSold = function(id) {
     const queryParams = [id];
     const queryString = `
@@ -389,7 +383,8 @@ app.post("/sold", (req, res) => {
 
     return db.query(queryString, queryParams);
   };
-
+  
+  //  call funnction to change status in database  redirect to /new
   const sold = markSold(req.body.id);
   sold.then(() => res.redirect("/new"));
 });
@@ -432,7 +427,8 @@ app.post("/login", (req, res) => {
   if (emailT === '' || passwordT === '') {
     return res.status(400).redirect('/login');
   }
-  console.log(emailT, passwordT);
+ 
+  // functon to find user by email
   const findUserByEmail = function(emailT) {
     const queryParams = [emailT];
     const queryString = `
@@ -443,7 +439,7 @@ app.post("/login", (req, res) => {
 
     return db.query(queryString, queryParams);
   };
-
+  // set all related to login/auth to values that fail 
   let isUser = undefined;
   let isAuthenticated = false;
   let isAdmin = false;
@@ -452,25 +448,33 @@ app.post("/login", (req, res) => {
   const getUser = findUserByEmail(emailT);
 
   getUser.then(resp => {
+    // Check if user exists if not redirect to /login
     if (resp.rows[0].email !== emailT) {
       res.redirect('/login');
       return isUser;
     }
+    // set isUser to true if pass, currently unused
     isUser = true;
-
+    
+    // Check if users password passes, if not redirect to /login
     if (resp.rows[0].password !== passwordT) {
       res.redirect('/login');
       return isAuthenticated;
     }
+    // set isAuthenticaed to true if password is correct
     isAuthenticated = true;
-
+    
+    // check to see if there is an id
     if (resp.rows[0].id) {
       userID = resp.rows[0].id;
+      // set userID in token
       req.session.userID = userID;
     }
-
+    
+    // check to see if the use is admin
     if (resp.rows[0].admin === true) {
       isAdmin = true;
+      // add admin status to session
       req.session.admin = isAdmin;
     }
     res.redirect("/cars");
@@ -491,7 +495,8 @@ app.post("/price", (rec, res) => {
   //Setting the default values for max and min if not provided
   let min = 0;
   let max = 1000000000;
-
+  
+  // check to see if value min or max, works if either is empty
   if (rec.body.min_price) {
     min = (rec.body.min_price * 100);
   }
@@ -500,7 +505,7 @@ app.post("/price", (rec, res) => {
     max = (rec.body.max_price * 100);
   }
 
-
+  // filter by price query
   const filterByPrice = function(minPrice, maxPrice) {
     const queryParams = [minPrice, maxPrice];
     const queryString = `
@@ -513,7 +518,7 @@ app.post("/price", (rec, res) => {
     return db.query(queryString, queryParams);
   };
 
-  // call function and re-render car_index with cars showing min and max
+  // call function and re-render car_index 
   const carsInPriceRange = filterByPrice(min, max);
   carsInPriceRange
     .then((response) => {

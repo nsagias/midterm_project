@@ -3,41 +3,50 @@
 <head>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>URL - TinyApp Example</title>
+  <title>THE CAR BUY PLACE</title>
 </head>
 <header>
   <%- include('partials/_header') %>
 </header>
-<body>
+<body style="background-color:rgb(233,236,239)">
   <div class="d-flex justify-content-center m-4">
 <div class="jumbotron w-75 text-center">
   <img src="<%=data.cover_url %> " alt="">
 </div>
-<form method="POST" action="/favourites" id="add-favourites-form" class="favourites-form">
+<!-- <form method="POST" action="/favourites" id="add-favourites-form" class="favourites-form">
   <div class="pl-3">
     <input type="hidden" name="carId" id="add-favourites_car_id">
     <script type="text/javascript"> document.getElementById('add-favourites_car_id').value = "<%= data.car_id %>";</script>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success">FAVOURITE</button>
+    <button type="submit" class="btn btn-info">FAVOURITE</button>
   </div>
-</form>
+</form> -->
 
 </div>
   <div class="sub-heading text-center">
     <h1>Description</h1>
+      <form method="POST" action="/favourites" id="add-favourites-form" class="favourites-form">
+        <div class="pl-3">
+          <input type="hidden" name="carId" id="add-favourites_car_id">
+          <script type="text/javascript"> document.getElementById('add-favourites_car_id').value = "<%= data.car_id %>";</script>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-info">ADD TO FAVOURITES</button>
+        </div>
+      </form>
   </div>
   <div class="container pl-6 pt-2 mt-5">
     <div class="d-flex justify-content-center">
-    <div class="jumbotron w-75 ">
+    <div class="jumbotron w-75 bg-secondary text-white">
      <p><%=data.descriptions%> </p>
      <div class="flex-row">
        <ul>
-       <li>Year: <%= data.year %> </li>
-       <li>Model: <%= data.model %> </li>
-       <li>Make: <%= data.make%></li>
-       <li>Model color: <%=data.model_colour%></li>
-       <li>Price :<%=data.car_price /100%></li>
+       <li><h4>Year: <%= data.year %> </h4></li>
+       <li><h4>Model: <%= data.model %> </h4></li>
+       <li><h4>Make: <%= data.make%></h4></li>
+       <li><h4>Model color: <%=data.model_colour%></h4></li>
+       <li><h4>Price : $<%=data.car_price /100%></h4></li>
       </ul>
      </div>
     </div>
@@ -46,7 +55,7 @@
   <div class="container d-flex justify-content-center">
   <div class="jumbotron w-25 bg-secondary">
     <form action="/messages"method="post">
-      <h5>General Enquiry</h5>
+      <h5 style="color:white">General Enquiry</h5>
       <div class="mb-3">
         <input type="text" name="name"class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
       </div>
@@ -65,11 +74,11 @@
         <input type="email" name="sender_email" class="form-control" id="exampleFormControlInput4" placeholder="Your Email Address">
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Message:</label>
+        <label for="exampleFormControlTextarea1" class="form-label" style="color:white">Message:</label>
         <textarea type="text"class="form-control" name="emailContent" id="exampleFormControlTextarea1" rows="3"></textarea>
       </div>
       <div>
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="submit" class="btn btn-info">Submit</button>
       </div>
     </form>
   </div>

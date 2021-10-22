@@ -187,17 +187,13 @@ const getAllCars = function(req, resp) {
 };
 
 /***************************************
- * Email messages show pages for
- *       admin page/car_new
  * GET/cars for car_index
+ * takes the function getAllCars
  ***************************************/
 app.get("/cars", getAllCars);
 
 
-app.get("/cars/:user_id", (req, res) => {
 
-  res.render("car_index");
-});
 //function for get the car details by id
 const getCardetailsByid = (id) => {
   const sql = `SELECT cars.id as car_id, title, descriptions, year, make, model, model_colour, cover_url, car_price, users.email as seller_email
@@ -214,7 +210,9 @@ const getCardetailsByid = (id) => {
 };
 
 
-
+/***************************************
+ * GET/ cars by id at /show route
+ ***************************************/
 app.get("/show/:car_id", (req, res) => {
   const carID = req.params.car_id;
   getCardetailsByid(carID)
@@ -227,6 +225,9 @@ app.get("/show/:car_id", (req, res) => {
 
 
 
+/***************************************
+ * GET/ user favourites, logged in user
+ ***************************************/
 app.get("/favourites", (req, res) => {
   const userID = req.session.userID;
 
@@ -259,8 +260,10 @@ app.get("/favourites", (req, res) => {
 
 });
 
-
-// favourite feature related route add to favourite
+/***************************************
+ * POST/ new favourites to database
+ * logged in required
+ ***************************************/
 app.post("/favourites", (req, res) => {
   const userID = req.session.userID;
   console.log(req.body.carID);
@@ -290,7 +293,11 @@ app.post("/favourites", (req, res) => {
     });
 });
 
-// Display form to add a new car
+
+
+/***************************************
+ * GET/ /new and update messages call
+ ***************************************/
 app.get("/new", (req, res) => {
   const getMessaging = function() {
     const queryString = `
@@ -315,9 +322,10 @@ app.get("/new", (req, res) => {
 });
 
 
-// Recieve new car form submission and send to db
+/***************************************
+ * POST/new get add new car and reload /new
+ ***************************************/
 app.post("/new", (req, res) => {
-
   const addCar = function(car) {
     const queryParams = [car.seller_id, car.title, car.descriptions, 
                          car.year, car.make, car.model, car.model_colour, 
@@ -340,7 +348,9 @@ app.post("/new", (req, res) => {
 
 });
 
-// "Delete" a record (really just add a delete date)
+/***************************************
+ * POST/ delete endpoint marks item hidden
+ ***************************************/
 app.post("/delete", (req, res) => {
   if (!req.body.id) {
     return res.redirect("/new");
@@ -362,7 +372,9 @@ app.post("/delete", (req, res) => {
 
 });
 
-// MARK SOLD - marks a specific car id as sold in the db
+/***************************************
+ * POST/ update item to sold true in database
+ ***************************************/
 app.post("/sold", (req, res) => {
   if (!req.body.id) {
     return res.redirect("/new");
@@ -411,7 +423,6 @@ app.get('/login', (req, res) => {
  * Login
  * POST /login
  ***************************************/
-
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -473,7 +484,6 @@ app.post("/login", (req, res) => {
 
 
 /***************************************
- * Login
  * POST /price
  * Enpoint to get/filter price by min max
  ***************************************/

@@ -214,7 +214,6 @@ const getCardetailsByid=(id)=>{
 }
 app.get("/show/:car_id", (req, res) => {
   const carID=req.params.car_id;
-  //console.log(carID)
   getCardetailsByid(carID)
   .then((data)=>{
     const templateVars={data}

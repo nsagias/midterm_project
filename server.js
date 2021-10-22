@@ -90,8 +90,7 @@ app.post('/messages',async(req,res)=>{
         ))
       `;
 
-      return db
-        .query(queryString, queryParams);
+      return db.query(queryString, queryParams);
     }
     addMessageRecord(car_id_num, user_id, email, sender_email).then((res) => console.log(res));
   //}
@@ -114,7 +113,7 @@ app.post('/messages',async(req,res)=>{
     text:`Sender Email: ${sender_email} \nMessage: ${emailContent}`, 
   });
   
-  // do note delete
+  // do NOT delete
   // console.log("Message sent: %s", info.messageId);
   // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   res.redirect("/cars");
@@ -122,9 +121,9 @@ app.post('/messages',async(req,res)=>{
 
 
 /***************************************
- * Email messages show pages for 
+ * Email messages show pages for
  *       admin page/car_new
- * POST /adminmessage 
+ * POST /adminmessage
  ***************************************/
 app.post('/adminmessage',async(req,res)=>{
   const{email,emailContent,subject}=req.body;
@@ -150,13 +149,13 @@ app.post('/adminmessage',async(req,res)=>{
   console.log("Message sent: %s", info.messageId);
   
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-  res.redirect("/new")
+  res.redirect("/new");
 });
 
 
 
 /***************************************
- * Get All cars function for 
+ * Get All cars function for
  * cars_index
  ***************************************/
 const getAllCars = function(req, resp) {
@@ -182,7 +181,7 @@ const getAllCars = function(req, resp) {
         cars: result
       };
 
-      resp.render("car_index", {templateVars})
+      resp.render("car_index", {templateVars});
   })
 };
 
@@ -210,18 +209,20 @@ const getCardetailsByid=(id)=>{
   .then((res)=>{
    return res.rows[0];
   })
-  .catch(err=>err)
+  .catch(err=>err);
 }
 app.get("/show/:car_id", (req, res) => {
   const carID=req.params.car_id;
   getCardetailsByid(carID)
   .then((data)=>{
-    const templateVars={data}
-    res.render("car_show",templateVars)
+    const templateVars={data};
+    res.render("car_show",templateVars);
   })
 });
 
-// favourite feature related route (filters the index view by favourite)
+
+
+
 app.get("/favourites", (req, res) => {
   const userID = req.session.userID;
 
@@ -240,7 +241,7 @@ app.get("/favourites", (req, res) => {
     ORDER BY favourite_date DESC
     `;
 
-    return db.query(queryString, queryParams)
+    return db.query(queryString, queryParams);
   }
   // call favourites and  assign to template var
   const carsInFavourites = filterByFavourites(userID);
@@ -248,7 +249,7 @@ app.get("/favourites", (req, res) => {
     .then((response) => {
       let cars = response.rows;
       let templateVars = {cars};
-      res.render("car_index", templateVars)
+      res.render("car_index", templateVars);
     })
 
 });
@@ -302,7 +303,7 @@ app.get("/new", (req, res) => {
     .then((response) => {
       let messages = response.rows;
       let templateVars = {messages};
-      res.render("car_new", templateVars)
+      res.render("car_new", templateVars);
     });
 
 });
@@ -350,8 +351,7 @@ app.post("/delete", (req, res) => {
 
 
   const deleted = markDeleted(req.body.id);
-  deleted
-    .then(() => res.redirect("/new"));
+  deleted.then(() => res.redirect("/new"));
 
 });
 
@@ -493,7 +493,7 @@ app.post("/price", (rec, res) => {
     AND car_price <= $2
     `;
 
-    return db.query(queryString, queryParams)
+    return db.query(queryString, queryParams);
   }
 
  // call function and re-render car_index with cars showing min and max
@@ -502,8 +502,8 @@ app.post("/price", (rec, res) => {
     .then((response) => {
       let cars = response.rows;
       let templateVars = {cars};
-      res.render("car_index", templateVars)
-    })
+      res.render("car_index", templateVars);
+    });
 });
 
 // Created a work around to put a cookie for testing

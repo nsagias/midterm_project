@@ -72,14 +72,14 @@ app.get('/stats', (req, res) => {
 app.post('/messages', async(req, res) => {
   const user_id = req.session.userID;
   const { car_id, email, sender_email, emailContent, subject } = req.body;
-  const car_id_num = Number(car_id)
+  const car_id_num = Number(car_id);
   console.log(car_id_num);
   // if user is not logged in, redirect to the login route
   if (!user_id) {
     res.redirect("/login");
   }
-  // adding a record of the message event to the messages db if it is sent by a user. 
-  const addMessageRecord = function (car_id, user_id, seller_email, buyer_email) {
+  // adding a record of the message event to the messages db if it is sent by a user.
+  const addMessageRecord = function(car_id, user_id, seller_email, buyer_email) {
     const queryParams = [car_id, user_id, seller_email, buyer_email];
     const queryString = `
       INSERT INTO messages (car_id, buyer_id, email_id_receiver, email_id_sender, seller_id)
@@ -91,7 +91,8 @@ app.post('/messages', async(req, res) => {
       `;
 
     return db.query(queryString, queryParams);
-  }
+  };
+
   addMessageRecord(car_id_num, user_id, email, sender_email).then((res) => console.log(res));
   //}
 
@@ -182,11 +183,11 @@ const getAllCars = function(req, resp) {
     };
 
     resp.render("car_index", { templateVars });
-  })
+  });
 };
 
 /***************************************
- * Email messages show pages for 
+ * Email messages show pages for
  *       admin page/car_new
  * GET/cars for car_index
  ***************************************/
@@ -210,14 +211,17 @@ const getCardetailsByid = (id) => {
       return res.rows[0];
     })
     .catch(err => err);
-}
+};
+
+
+
 app.get("/show/:car_id", (req, res) => {
   const carID = req.params.car_id;
   getCardetailsByid(carID)
     .then((data) => {
       const templateVars = { data };
       res.render("car_show", templateVars);
-    })
+    });
 });
 
 
@@ -242,7 +246,8 @@ app.get("/favourites", (req, res) => {
     `;
 
     return db.query(queryString, queryParams);
-  }
+  };
+
   // call favourites and  assign to template var
   const carsInFavourites = filterByFavourites(userID);
   carsInFavourites
@@ -250,7 +255,7 @@ app.get("/favourites", (req, res) => {
       let cars = response.rows;
       let templateVars = { cars };
       res.render("car_index", templateVars);
-    })
+    });
 
 });
 
@@ -274,15 +279,15 @@ app.post("/favourites", (req, res) => {
     RETURNING *
     `;
 
-    return db.query(queryString, queryParams)
-  }
+    return db.query(queryString, queryParams);
+  };
 
   const newFavourite = addToFavourites(userID, carID);
 
   newFavourite
     .then(() => {
       res.redirect("/cars");
-    })
+    });
 });
 
 // Display form to add a new car
@@ -296,7 +301,8 @@ app.get("/new", (req, res) => {
     `;
 
     return db.query(queryString);
-  }
+  };
+
   // call messaging and assign data to templateVars
   const latestMessaging = getMessaging();
   latestMessaging
@@ -324,12 +330,12 @@ app.post("/new", (req, res) => {
 
   };
 
-  const newListing = addCar(req.body)
+  const newListing = addCar(req.body);
 
   newListing
     .then(() => {
       res.redirect("/new");
-    })
+    });
 
 });
 
@@ -338,7 +344,7 @@ app.post("/delete", (req, res) => {
   if (!req.body.id) {
     return res.redirect("/new");
   }
-  const markDeleted = function (id) {
+  const markDeleted = function(id) {
     const queryParams = [id];
     const queryString = `
     UPDATE cars
@@ -346,8 +352,8 @@ app.post("/delete", (req, res) => {
     WHERE id = $1
     ;`;
 
-    return db.query(queryString, queryParams)
-  }
+    return db.query(queryString, queryParams);
+  };
 
 
   const deleted = markDeleted(req.body.id);
@@ -368,8 +374,8 @@ app.post("/sold", (req, res) => {
     WHERE id = $1
     ;`;
 
-    return db.query(queryString, queryParams)
-  }
+    return db.query(queryString, queryParams);
+  };
 
   const sold = markSold(req.body.id);
   sold.then(() => res.redirect("/new"));
@@ -415,7 +421,7 @@ app.post("/login", (req, res) => {
     return res.status(400).redirect('/login');
   }
   console.log(emailT, passwordT);
-  const findUserByEmail = function (emailT) {
+  const findUserByEmail = function(emailT) {
     const queryParams = [emailT];
     const queryString = `
       SELECT *
@@ -424,7 +430,7 @@ app.post("/login", (req, res) => {
       `;
 
     return db.query(queryString, queryParams);
-  }
+  };
 
   let isUser = undefined;
   let isAuthenticated = false;
@@ -477,11 +483,11 @@ app.post("/price", (rec, res) => {
 
   if (rec.body.min_price) {
     min = (rec.body.min_price * 100);
-  };
+  }
 
   if (rec.body.max_price) {
     max = (rec.body.max_price * 100);
-  };
+  }
 
 
   const filterByPrice = function(minPrice, maxPrice) {
@@ -494,7 +500,7 @@ app.post("/price", (rec, res) => {
     `;
 
     return db.query(queryString, queryParams);
-  }
+  };
 
   // call function and re-render car_index with cars showing min and max
   const carsInPriceRange = filterByPrice(min, max);

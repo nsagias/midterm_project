@@ -319,7 +319,9 @@ app.get("/new", (req, res) => {
 app.post("/new", (req, res) => {
 
   const addCar = function(car) {
-    const queryParams = [car.seller_id, car.title, car.descriptions, car.year, car.make, car.model, car.model_colour, car.thumbnail_url, car.cover_url, car.car_price * 100];
+    const queryParams = [car.seller_id, car.title, car.descriptions, 
+                         car.year, car.make, car.model, car.model_colour, 
+                         car.thumbnail_url, car.cover_url, car.car_price * 100];
     const queryString = `
     INSERT INTO cars (seller_id, title, descriptions, year, make, model, model_colour, thumbnail_url, cover_url, car_price)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -327,7 +329,6 @@ app.post("/new", (req, res) => {
     `;
 
     return db.query(queryString, queryParams);
-
   };
 
   const newListing = addCar(req.body);

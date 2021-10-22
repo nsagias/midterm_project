@@ -439,7 +439,6 @@ app.post("/login", (req, res) => {
       return isUser;
     }
     isUser = true;
-  
 
     if (resp.rows[0].password !== passwordT) {
       res.redirect('/login');
@@ -447,7 +446,6 @@ app.post("/login", (req, res) => {
     }
     isAuthenticated = true;
     
-
     if (resp.rows[0].id) {
       userID = resp.rows[0].id;
       req.session.userID = userID;

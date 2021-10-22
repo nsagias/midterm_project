@@ -113,7 +113,8 @@ app.post('/messages',async(req,res)=>{
     subject: `${subject}`, 
     text:`Sender Email: ${sender_email} \nMessage: ${emailContent}`, 
   });
-
+  
+  // do note delete
   // console.log("Message sent: %s", info.messageId);
   // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   res.redirect("/cars");

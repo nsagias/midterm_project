@@ -535,8 +535,8 @@ app.post("/price", (rec, res) => {
 
 // Created a work around to put a cookie for testing
 app.post("/new/login", (req, res) => {
-  req.session.userID = req.body.id; //This value should look like a number between 1-7
-  req.session.admin = true; //This value shoule be t for user 1 and user 7
+  req.session.userID = req.body.id; 
+  req.session.admin = true; 
   res.redirect("/new");
 });
 

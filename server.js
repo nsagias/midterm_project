@@ -138,36 +138,36 @@ app.post('/messages',async(req,res)=>{
   // Preview only available when sending through an Ethereal account
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   res.redirect("/cars");
-})
+});
 
-// app.post('/adminmessage',async(req,res)=>{
-//   const{email,emailContent,subject}=req.body;
-//   console.log(req.body.email)
-//   let transporter = nodemailer.createTransport({
-//     host: "smtp.ethereal.email",
-//     port: 587,
-//     secure: false, // true for 465, false for other ports
-//     auth: {
-//       user: 'bessie.schiller54@ethereal.email', // generated ethereal user
-//       pass: 'NtKGqxXMqAPCn4tzQQ', // generated ethereal password
-//     },
-//   });
+app.post('/adminmessage',async(req,res)=>{
+  const{email,emailContent,subject}=req.body;
 
-//   // send mail with defined transport object
-//   let info = await transporter.sendMail({
-//     from: 'bessie.schiller54@ethereal.email', // sender address
-//     to: `${email}`, // list of receivers
-//     subject: `${subject}`, // Subject line
-//     text:`${emailContent}`, // plain text body // html body
-//   });
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: 'bessie.schiller54@ethereal.email', // generated ethereal user
+      pass: 'NtKGqxXMqAPCn4tzQQ', // generated ethereal password
+    },
+  });
 
-//   console.log("Message sent: %s", info.messageId);
-//   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  // send mail with defined transport object
+  let info = await transporter.sendMail({
+    from: 'bessie.schiller54@ethereal.email', // sender address
+    to: `${email}`, // list of receivers
+    subject: `${subject}`, // Subject line
+    text:`${emailContent}`, // plain text body // html body
+  });
 
-//   // Preview only available when sending through an Ethereal account
-//   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-//   res.send("email has send")
-// })
+  console.log("Message sent: %s", info.messageId);
+  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+  // Preview only available when sending through an Ethereal account
+  console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+  res.redirect("/new")
+});
 
 // get all cars function
 const getAllCars = function(req, resp) {
@@ -353,6 +353,9 @@ app.post("/new", (req, res) => {
 
 // "Delete" a record (really just add a delete date)
 app.post("/delete", (req, res) => {
+  if (!req.body.id) {
+    return res.redirect("/new");
+  }
   const markDeleted = function (id) {
     const queryParams = [id];
     const queryString = `
@@ -374,6 +377,9 @@ app.post("/delete", (req, res) => {
 
 // MARK SOLD - marks a specific car id as sold in the db
 app.post("/sold", (req, res) => {
+  if (!req.body.id) {
+    return res.redirect("/new");
+  }
   const markSold = function (id) {
     const queryParams = [id];
     const queryString = `

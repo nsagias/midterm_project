@@ -9,7 +9,7 @@
   <%- include('partials/_header') %>
 </header>
 
-<body>
+<body style="background-color:rgb(233,236,239)">
   <div class="container d-flex justify-content-center">
   <h1>Add a new car</h1>
 
@@ -92,7 +92,7 @@
       <input type="number" name="max_price" placeholder="Max Price" >
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-success">FILTER BY PRICE</button>
+      <button type="submit" class="btn btn-info">FILTER BY PRICE</button>
     </div>
   </form>
 
@@ -106,7 +106,7 @@
       <input type="number" name="admin" placeholder="true or false" id="workaround-login_user_number">
     </div>
     <div class="form-group">
-      <button type="submit" class="btn btn-success">Login!</button>
+      <button type="submit" class="btn btn-info">Login!</button>
     </div>
   </form>
 
@@ -136,7 +136,7 @@
     <form method="GET" action="/new">
       <button type="submit" class="btn btn-success">GET MESSAGES</button>
     </form>
-    <table class="table">
+    <table class="table bg-secondary text-white" >
       <thead>
         <tr>
           <th scope="col">CAR ID</th>
@@ -171,7 +171,7 @@
 <div class="container">
 <div class="jumbotron w-25 bg-secondary">
   <form action="/messages"method="post">
-    <h5>General Enquiry</h5>
+    <h5 style="color:white">General Enquiry</h5>
     <div class="mb-3">
       <input type="text" name="name"class="form-control" id="exampleFormControlInput1" placeholder="Your Name">
     </div>
@@ -185,11 +185,11 @@
       <input type="hidden" name="sender_email" class="form-control" id="exampleFormControlInput4" placeholder="Your Email">
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">Message:</label>
+      <label for="exampleFormControlTextarea1" class="form-label" style="color:white">Message:</label>
       <textarea type="text"class="form-control" name="emailContent" id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
     <div>
-      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="submit" class="btn btn-info">Submit</button>
     </div>
   </form>
 </div>

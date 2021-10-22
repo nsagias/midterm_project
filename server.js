@@ -327,7 +327,7 @@ app.get("/new", (req, res) => {
 
 // Recieve new car form submission and send to db
 app.post("/new", (req, res) => {
-  //I'm decaring the function inside the route to keep everything together
+  
   const addCar = function (car) {
     const queryParams = [car.seller_id, car.title, car.descriptions, car.year, car.make, car.model, car.model_colour, car.thumbnail_url, car.cover_url, car.car_price * 100];
     const queryString = `

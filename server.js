@@ -114,19 +114,19 @@ app.post('/messages',async(req,res)=>{
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
-    secure: false, // true for 465, false for other ports
+    secure: false,
     auth: {
-      user: 'bessie.schiller54@ethereal.email', // generated ethereal user
-      pass: 'NtKGqxXMqAPCn4tzQQ', // generated ethereal password
+      user: 'bessie.schiller54@ethereal.email', 
+      pass: 'NtKGqxXMqAPCn4tzQQ', 
     },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'bessie.schiller54@ethereal.email', // sender address
-    to: `${email}`, // list of receivers
-    subject: `${subject}`, // Subject line
-    text:`Sender Email: ${sender_email} \nMessage: ${emailContent}`, // plain text body // html body
+    from: 'bessie.schiller54@ethereal.email', 
+    to: `${email}`, 
+    subject: `${subject}`, 
+    text:`Sender Email: ${sender_email} \nMessage: ${emailContent}`, 
   });
 
   console.log("Message sent: %s", info.messageId);
@@ -149,25 +149,23 @@ app.post('/adminmessage',async(req,res)=>{
   let transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
-    secure: false, // true for 465, false for other ports
+    secure: false, 
     auth: {
-      user: 'bessie.schiller54@ethereal.email', // generated ethereal user
-      pass: 'NtKGqxXMqAPCn4tzQQ', // generated ethereal password
+      user: 'bessie.schiller54@ethereal.email', 
+      pass: 'NtKGqxXMqAPCn4tzQQ', 
     },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'bessie.schiller54@ethereal.email', // sender address
-    to: `${email}`, // list of receivers
-    subject: `${subject}`, // Subject line
-    text:`${emailContent}`, // plain text body // html body
+    from: 'bessie.schiller54@ethereal.email', 
+    to: `${email}`, 
+    subject: `${subject}`, 
+    text:`${emailContent}`, 
   });
 
   console.log("Message sent: %s", info.messageId);
-  // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
+  
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
   res.redirect("/new")
 });

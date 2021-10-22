@@ -44,17 +44,8 @@ app.use(
 
 app.use(express.static("public"));
 
-
-// Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 const { Template } = require("ejs");
 const { isDate } = require("moment");
-
-
-// Note: mount other resources here, using the same pattern above
-
 
 app.get("/", (req, res) => {
 

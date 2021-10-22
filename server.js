@@ -364,6 +364,9 @@ app.post("/delete", (req, res) => {
 
 // MARK SOLD - marks a specific car id as sold in the db
 app.post("/sold", (req, res) => {
+  if (!req.body.id) {
+    return res.redirect("/new");
+  }
   const markSold = function (id) {
     const queryParams = [id];
     const queryString = `

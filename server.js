@@ -405,11 +405,11 @@ app.post("/sold", (req, res) => {
     .then(() => res.redirect("/new"));
 });
 
+
+
 /***************************************
  * Logout
  * POST /logout
- * Clears session values
- * Redirects to root /GET/
  ***************************************/
  app.post("/logout", (req, res) => {
   // set session value to null
@@ -422,7 +422,6 @@ app.post("/sold", (req, res) => {
 /***************************************
  * Login
  * GET /login
- * Renders the login form
  ***************************************/
  app.get('/login', (req, res) => {
   // get login page/form
@@ -434,7 +433,6 @@ app.post("/sold", (req, res) => {
 /***************************************
  * Login
  * POST /login
- * Redirects to GET /urls
  ***************************************/
 
 app.post("/login", (req, res) => {

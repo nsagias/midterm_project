@@ -44,8 +44,6 @@ app.use(
 
 app.use(express.static("public"));
 
-const { Template } = require("ejs");
-const { isDate } = require("moment");
 
 app.get("/", (req, res) => {
 

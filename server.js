@@ -469,31 +469,29 @@ app.post("/login", (req, res) => {
       return isUser;
     }
     isUser = true;
-    console.log('isUser:', isUser);
+  
 
     if (resp.rows[0].password !== passwordT) {
       res.redirect('/login');
       return isAuthenticated;
     }
     isAuthenticated = true;
-    console.log('isAuthenticated:', isAuthenticated);
+    
 
     if (resp.rows[0].id) {
       userID = resp.rows[0].id;
       req.session.userID = userID;
-      console.log('userID:', userID);
     }
 
     if (resp.rows[0].admin === true) {
       isAdmin = true;
       req.session.admin = isAdmin;
-      console.log('isAdmin:', isAdmin);
     }
     res.redirect("/cars");
   })
   .catch((resp) => console.log(resp));
-
-    console.log('this is bingo',bingo)
+    // do not remove this console.log
+    console.log('this is bingo',bingo);
 
 });
 
